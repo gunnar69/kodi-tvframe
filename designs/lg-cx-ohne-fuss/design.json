@@ -1,0 +1,27 @@
+{
+ "schema": 1,
+ "id": "lg-cx-ohne-fuss",
+ "name": "LG CX – 4:3 ohne Fuß",
+ "name_en": "LG CX – 4:3 without stand",
+ "author": "SARAH",
+ "version": "1.0.0",
+ "description": "Virtueller LG-CX-Rahmen: außen echtes Schwarz, auf einem OLED verschmilzt er mit dem echten Gehäuse. 4:3 ohne Standfuß, dazu Breitbild 2,35:1 und 2:1.",
+ "description_en": "Virtual LG CX bezel: true black outside, blends into the real bezel on an OLED. 4:3 without stand, plus 2.35:1 and 2:1.",
+ "license": "CC0-1.0",
+ "rights_confirmed": true,
+ "preview": "preview.jpg",
+ "formats": {
+  "43": {
+   "image": "lg_cx_43_nofoot.png",
+   "frame": "lg_cx_43_nofoot.json"
+  },
+  "wide": {
+   "image": "lg_cx_wide.png",
+   "frame": "lg_cx_wide.json"
+  },
+  "w2": {
+   "image": "lg_cx_wide_2x1.png",
+   "frame": "lg_cx_wide_2x1.json"
+  }
+ }
+}

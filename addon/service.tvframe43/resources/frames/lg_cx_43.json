@@ -1,0 +1,22 @@
+{
+ "id": "lg_cx_43",
+ "format": "4:3",
+ "image": "lg_cx_43.png",
+ "canvas": [
+  1920,
+  1080
+ ],
+ "screen": {
+  "x": 288,
+  "y": 6,
+  "w": 1344,
+  "h": 1005,
+  "radius": 6
+ },
+ "overlap": 6,
+ "design_aspect": 1.3333,
+ "zoom": 0.9417,
+ "verticalshift": -1.0,
+ "outside_black": true,
+ "name": "LG CX 4:3 mit Fuß"
+}

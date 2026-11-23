@@ -1,0 +1,27 @@
+{
+ "schema": 1,
+ "id": "lg-cx-mit-fuss",
+ "name": "LG CX – 4:3 mit Fuß",
+ "name_en": "LG CX – 4:3 with stand",
+ "author": "SARAH",
+ "version": "1.0.0",
+ "description": "Wie „LG CX ohne Fuß“, im 4:3-Format mit angedeutetem Standfuß (Bild sitzt oben).",
+ "description_en": "Like “LG CX without stand”, 4:3 with a hinted stand (picture sits at the top).",
+ "license": "CC0-1.0",
+ "rights_confirmed": true,
+ "preview": "preview.jpg",
+ "formats": {
+  "43": {
+   "image": "lg_cx_43.png",
+   "frame": "lg_cx_43.json"
+  },
+  "wide": {
+   "image": "lg_cx_wide.png",
+   "frame": "lg_cx_wide.json"
+  },
+  "w2": {
+   "image": "lg_cx_wide_2x1.png",
+   "frame": "lg_cx_wide_2x1.json"
+  }
+ }
+}

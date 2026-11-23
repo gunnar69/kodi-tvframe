@@ -1,0 +1,22 @@
+{
+ "id": "lg_cx_wide",
+ "format": "2.35:1",
+ "image": "lg_cx_wide.png",
+ "canvas": [
+  1920,
+  1080
+ ],
+ "screen": {
+  "x": 6,
+  "y": 6,
+  "w": 1908,
+  "h": 805,
+  "radius": 6
+ },
+ "overlap": 6,
+ "design_aspect": 2.35,
+ "zoom": 1.0,
+ "verticalshift": -1.0,
+ "outside_black": true,
+ "name": "LG CX Breitbild"
+}

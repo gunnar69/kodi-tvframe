@@ -1,0 +1,23 @@
+{
+ "id": "wood50_wide",
+ "name": "50er Holztruhe (Breitbild 2.35:1)",
+ "format": "2.35:1",
+ "image": "wood50_wide.png",
+ "canvas": [
+  1920,
+  1080
+ ],
+ "screen": {
+  "x": 102,
+  "y": 179,
+  "w": 1716,
+  "h": 722,
+  "radius": 26
+ },
+ "overlap": 6,
+ "design_aspect": 2.35,
+ "zoom": 0.9,
+ "verticalshift": 0.0,
+ "note": "zoom = max((w+2*overlap)/basis_w, (h+2*overlap)/basis_h); basis bei Zoom 1: a<=16:9 -> 1080a x 1080, sonst 1920 x 1920/a",
+ "style": "wood50"
+}

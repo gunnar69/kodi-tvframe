@@ -1,0 +1,379 @@
+{
+ "schema": 1,
+ "repo": "https://github.com/gunnar69/kodi-tvframe",
+ "designs": [
+  {
+   "id": "flach-a",
+   "name": "Flach A",
+   "author": "SARAH",
+   "version": "1.0.0",
+   "description": "Schlichter flacher Rahmen, Variante A. 4:3 und Breitbild 2,35:1.",
+   "license": "CC0-1.0",
+   "preview": "designs/flach-a/preview.jpg",
+   "formats": [
+    "43",
+    "wide"
+   ],
+   "files": [
+    {
+     "path": "designs/flach-a/design.json",
+     "size": 509,
+     "sha256": "2a9f9ac8bd634a06e200d3450d7a2f2f60db02fbd357090875d002679e7a1666"
+    },
+    {
+     "path": "designs/flach-a/flatA_43.json",
+     "size": 312,
+     "sha256": "812e55a55d8f93485286555921285fdcfa7c08c9bb12a6e8bc33494f6045da2b"
+    },
+    {
+     "path": "designs/flach-a/flatA_43.png",
+     "size": 437399,
+     "sha256": "84880f503528791ee0c84f357a533da5466f1032ba25c657ba6ade93c1f0bcf8"
+    },
+    {
+     "path": "designs/flach-a/flat_wide.json",
+     "size": 316,
+     "sha256": "c70ffa40ad264ddf8f11720b6e5830835c516632b7cae2b6399d4dd8e46a1ad3"
+    },
+    {
+     "path": "designs/flach-a/flat_wide.png",
+     "size": 451951,
+     "sha256": "4ab50c24be751d3390e0df604cfdbc743dcffcd76e6964e8ac711cd8e0f516aa"
+    },
+    {
+     "path": "designs/flach-a/preview.jpg",
+     "size": 29023,
+     "sha256": "15c2c28fc119afb5baacf22cfcd43e4c6bef55450b948d748d8c4aa1455ea2d6"
+    }
+   ],
+   "name_en": "Flat A",
+   "description_en": "Plain flat frame, variant A. 4:3 and 2.35:1."
+  },
+  {
+   "id": "flach-b",
+   "name": "Flach B",
+   "author": "SARAH",
+   "version": "1.0.0",
+   "description": "Schlichter flacher Rahmen, Variante B. 4:3 und Breitbild 2,35:1.",
+   "license": "CC0-1.0",
+   "preview": "designs/flach-b/preview.jpg",
+   "formats": [
+    "43",
+    "wide"
+   ],
+   "files": [
+    {
+     "path": "designs/flach-b/design.json",
+     "size": 509,
+     "sha256": "cf5da70e1b1adb00ce86f733258c8f34f37ea486fd5db690e6ce1da3ccbbdc94"
+    },
+    {
+     "path": "designs/flach-b/flatB_43.json",
+     "size": 312,
+     "sha256": "44d99a4013de6c3a15d22477da132399d39850ee516b84d7b1937acdaac34359"
+    },
+    {
+     "path": "designs/flach-b/flatB_43.png",
+     "size": 834849,
+     "sha256": "764e89fcb8130be24ced4f170796307bc06ba55d822d9711180dc316640ebab3"
+    },
+    {
+     "path": "designs/flach-b/flat_wide.json",
+     "size": 316,
+     "sha256": "c70ffa40ad264ddf8f11720b6e5830835c516632b7cae2b6399d4dd8e46a1ad3"
+    },
+    {
+     "path": "designs/flach-b/flat_wide.png",
+     "size": 451951,
+     "sha256": "4ab50c24be751d3390e0df604cfdbc743dcffcd76e6964e8ac711cd8e0f516aa"
+    },
+    {
+     "path": "designs/flach-b/preview.jpg",
+     "size": 24181,
+     "sha256": "75f9d73e1b21a6992afc676451cf29be76e650e97df920abb8431230170908f2"
+    }
+   ],
+   "name_en": "Flat B",
+   "description_en": "Plain flat frame, variant B. 4:3 and 2.35:1."
+  },
+  {
+   "id": "holztruhe-50er-v3",
+   "name": "50er Holztruhe",
+   "author": "SARAH",
+   "version": "1.0.0",
+   "description": "Fernsehtruhe im Stil der 50er-Jahre aus Holz, Bild oben im Gehäuse. 4:3 und Breitbild 2,35:1.",
+   "license": "CC0-1.0",
+   "preview": "designs/holztruhe-50er-v3/preview.jpg",
+   "formats": [
+    "43",
+    "wide"
+   ],
+   "files": [
+    {
+     "path": "designs/holztruhe-50er-v3/design.json",
+     "size": 604,
+     "sha256": "81baa5dbb995a0890049a6af4a14df88ffd3b5f8fd60b9d628df38e645fd7b49"
+    },
+    {
+     "path": "designs/holztruhe-50er-v3/preview.jpg",
+     "size": 33093,
+     "sha256": "932b8621b4428ba0d053d71cb6282cadcfffef4fa9eb772e9aba45cf2c3c847a"
+    },
+    {
+     "path": "designs/holztruhe-50er-v3/wood50v3_43.json",
+     "size": 329,
+     "sha256": "1cb1251c27e0a6f7dc5fd01f1efd61482ba7e11c175e7d4086df370ccb666ae1"
+    },
+    {
+     "path": "designs/holztruhe-50er-v3/wood50v3_43.png",
+     "size": 1340302,
+     "sha256": "17cccd28ccc982bfd9511fb626ffce93aa5ef23e34fb3de04650c444809d15e4"
+    },
+    {
+     "path": "designs/holztruhe-50er-v3/wood50v3_wide.json",
+     "size": 337,
+     "sha256": "3dd30f63194541de33a6fc51c492237a9da0c0c83ff4a115a23d44e11d98a892"
+    },
+    {
+     "path": "designs/holztruhe-50er-v3/wood50v3_wide.png",
+     "size": 1179249,
+     "sha256": "424ef90ae06a18aaf84a11ad53515990a43ba0a786917ea80e8cddae257f72e2"
+    }
+   ],
+   "name_en": "50s wooden console",
+   "description_en": "1950s style wooden TV console, picture at the top. 4:3 and 2.35:1."
+  },
+  {
+   "id": "lg-cx-gehaeuse-metall",
+   "name": "LG CX – Gehäuse Metall",
+   "author": "SARAH",
+   "version": "1.0.0",
+   "description": "LG CX in einem gebürsteten Metallgehäuse; Breitbild und 2:1 mit Soundbar-Lochgitter unten.",
+   "license": "CC0-1.0",
+   "preview": "designs/lg-cx-gehaeuse-metall/preview.jpg",
+   "formats": [
+    "43",
+    "wide",
+    "w2"
+   ],
+   "files": [
+    {
+     "path": "designs/lg-cx-gehaeuse-metall/design.json",
+     "size": 751,
+     "sha256": "dce412d715df539a14557b7b594fe66d8513a8d9d349aa7803857ca641a761f7"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-metall/lg_cx_body_metal.json",
+     "size": 339,
+     "sha256": "28ffc3c541b1a3dc89bf084288ae6af216e5be2ab6a825033c543b2e47bed6b6"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-metall/lg_cx_body_metal.png",
+     "size": 593732,
+     "sha256": "80695a286a5115ef5b56c2674d43327cbb8adbd682b688cc3dc421e8bbe7d925"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-metall/lg_cx_wide_body.json",
+     "size": 346,
+     "sha256": "5d9a1a52c492c67fcc60e4103a6309026cef75eca4009e2ff561e923b64c55c8"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-metall/lg_cx_wide_body.png",
+     "size": 571867,
+     "sha256": "583c54529ddf4154c2a63217b2e7f1e7c81a6a1f6237f5f82c3d1a41167bd822"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-metall/lg_cx_wide_body_2x1.json",
+     "size": 337,
+     "sha256": "97707318d7844ff14ed95a13bd715229e4a208ce0d3f777f0ade43680cf38044"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-metall/lg_cx_wide_body_2x1.png",
+     "size": 270720,
+     "sha256": "444b128021b1a2f3e084cbba4d193d26acec126750538d16107ca38493787adf"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-metall/preview.jpg",
+     "size": 32477,
+     "sha256": "98dd4f3b829ed8e69766533dd02ae505c83b3a06f54621f444019b95ded140f9"
+    }
+   ],
+   "name_en": "LG CX – cabinet, metal",
+   "description_en": "LG CX in a brushed metal cabinet; widescreen and 2:1 with a perforated soundbar grille."
+  },
+  {
+   "id": "lg-cx-gehaeuse-stoff",
+   "name": "LG CX – Gehäuse Stoff",
+   "author": "SARAH",
+   "version": "1.0.0",
+   "description": "LG CX in einem Gehäuse mit Stoffbespannung; Breitbild und 2:1 mit Soundbar-Lochgitter unten.",
+   "license": "CC0-1.0",
+   "preview": "designs/lg-cx-gehaeuse-stoff/preview.jpg",
+   "formats": [
+    "43",
+    "wide",
+    "w2"
+   ],
+   "files": [
+    {
+     "path": "designs/lg-cx-gehaeuse-stoff/design.json",
+     "size": 754,
+     "sha256": "c764984ec7ca60f5218196ccee8bf75edf4ebce6ecb137a4894b7665591c593c"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-stoff/lg_cx_body_fabric.json",
+     "size": 340,
+     "sha256": "5bef373bd382b4d338eb82f9d3c65fb4a50f8898ddd09354f8185760bb0ccd2f"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-stoff/lg_cx_body_fabric.png",
+     "size": 399739,
+     "sha256": "4a2f9174ccfc400ef34f9a4f66f401fd3762c7ebf8642cbe571050eb777b0ea1"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-stoff/lg_cx_wide_body.json",
+     "size": 346,
+     "sha256": "5d9a1a52c492c67fcc60e4103a6309026cef75eca4009e2ff561e923b64c55c8"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-stoff/lg_cx_wide_body.png",
+     "size": 571867,
+     "sha256": "583c54529ddf4154c2a63217b2e7f1e7c81a6a1f6237f5f82c3d1a41167bd822"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-stoff/lg_cx_wide_body_2x1.json",
+     "size": 337,
+     "sha256": "97707318d7844ff14ed95a13bd715229e4a208ce0d3f777f0ade43680cf38044"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-stoff/lg_cx_wide_body_2x1.png",
+     "size": 270720,
+     "sha256": "444b128021b1a2f3e084cbba4d193d26acec126750538d16107ca38493787adf"
+    },
+    {
+     "path": "designs/lg-cx-gehaeuse-stoff/preview.jpg",
+     "size": 27393,
+     "sha256": "6a52f1f394e2298b0653e55486502c4492b8c251f61bb8a48525d381c4e0e7cb"
+    }
+   ],
+   "name_en": "LG CX – cabinet, fabric",
+   "description_en": "LG CX in a fabric-covered cabinet; widescreen and 2:1 with a perforated soundbar grille."
+  },
+  {
+   "id": "lg-cx-mit-fuss",
+   "name": "LG CX – 4:3 mit Fuß",
+   "author": "SARAH",
+   "version": "1.0.0",
+   "description": "Wie „LG CX ohne Fuß“, im 4:3-Format mit angedeutetem Standfuß (Bild sitzt oben).",
+   "license": "CC0-1.0",
+   "preview": "designs/lg-cx-mit-fuss/preview.jpg",
+   "formats": [
+    "43",
+    "wide",
+    "w2"
+   ],
+   "files": [
+    {
+     "path": "designs/lg-cx-mit-fuss/design.json",
+     "size": 694,
+     "sha256": "32551c47259e1daedad4054e06ac564e8a15815916205155156b816184415033"
+    },
+    {
+     "path": "designs/lg-cx-mit-fuss/lg_cx_43.json",
+     "size": 313,
+     "sha256": "35b3c2a73560c845408d5b1d204961764ec04456b24971237e3d34a6563c4765"
+    },
+    {
+     "path": "designs/lg-cx-mit-fuss/lg_cx_43.png",
+     "size": 11688,
+     "sha256": "9a5f0edccf243530e74cf9afde62cf2c13db91b9cc8e1f8d8d47b18ef91a3bcc"
+    },
+    {
+     "path": "designs/lg-cx-mit-fuss/lg_cx_wide.json",
+     "size": 309,
+     "sha256": "c14ac5d6dc6fb194da829835bd8ae31dbb63c5c9cf8a7384a7280e08ab92dae7"
+    },
+    {
+     "path": "designs/lg-cx-mit-fuss/lg_cx_wide.png",
+     "size": 11652,
+     "sha256": "37ebd3e2ab4997b8bb831421c2eeef8c3b32ef2aa2c2054af79c053c04de93f9"
+    },
+    {
+     "path": "designs/lg-cx-mit-fuss/lg_cx_wide_2x1.json",
+     "size": 309,
+     "sha256": "e6fa4d21c55b445c3594fd7fc78d915f9f3772e49a6073f6bcd3e5dc922d9b39"
+    },
+    {
+     "path": "designs/lg-cx-mit-fuss/lg_cx_wide_2x1.png",
+     "size": 11652,
+     "sha256": "7f9bd853859ae96fa96627e56bed7ac81cade8f887cdc0d83664fe6506b7c092"
+    },
+    {
+     "path": "designs/lg-cx-mit-fuss/preview.jpg",
+     "size": 23900,
+     "sha256": "007a273da4c6cadaeacd67f987b2aab35065a5e19232a847e623389b096d549b"
+    }
+   ],
+   "name_en": "LG CX – 4:3 with stand",
+   "description_en": "Like “LG CX without stand”, 4:3 with a hinted stand (picture sits at the top)."
+  },
+  {
+   "id": "lg-cx-ohne-fuss",
+   "name": "LG CX – 4:3 ohne Fuß",
+   "author": "SARAH",
+   "version": "1.0.0",
+   "description": "Virtueller LG-CX-Rahmen: außen echtes Schwarz, auf einem OLED verschmilzt er mit dem echten Gehäuse. 4:3 ohne Standfuß, dazu Breitbild 2,35:1 und 2:1.",
+   "license": "CC0-1.0",
+   "preview": "designs/lg-cx-ohne-fuss/preview.jpg",
+   "formats": [
+    "43",
+    "wide",
+    "w2"
+   ],
+   "files": [
+    {
+     "path": "designs/lg-cx-ohne-fuss/design.json",
+     "size": 817,
+     "sha256": "8788a1d5f77fda1cc3fab6e7308bf11065cca3702ef9c21c318ac718f0ad974f"
+    },
+    {
+     "path": "designs/lg-cx-ohne-fuss/lg_cx_43_nofoot.json",
+     "size": 328,
+     "sha256": "d90dd4bd4c421f1d94c31b68a53b2eb6e7bb11ed02bb8230227f717a3e23a1ba"
+    },
+    {
+     "path": "designs/lg-cx-ohne-fuss/lg_cx_43_nofoot.png",
+     "size": 11014,
+     "sha256": "76d7def45a454816572e206fc745279aa41adb0dd1c0190d927d65c356bd5263"
+    },
+    {
+     "path": "designs/lg-cx-ohne-fuss/lg_cx_wide.json",
+     "size": 309,
+     "sha256": "c14ac5d6dc6fb194da829835bd8ae31dbb63c5c9cf8a7384a7280e08ab92dae7"
+    },
+    {
+     "path": "designs/lg-cx-ohne-fuss/lg_cx_wide.png",
+     "size": 11652,
+     "sha256": "37ebd3e2ab4997b8bb831421c2eeef8c3b32ef2aa2c2054af79c053c04de93f9"
+    },
+    {
+     "path": "designs/lg-cx-ohne-fuss/lg_cx_wide_2x1.json",
+     "size": 309,
+     "sha256": "e6fa4d21c55b445c3594fd7fc78d915f9f3772e49a6073f6bcd3e5dc922d9b39"
+    },
+    {
+     "path": "designs/lg-cx-ohne-fuss/lg_cx_wide_2x1.png",
+     "size": 11652,
+     "sha256": "7f9bd853859ae96fa96627e56bed7ac81cade8f887cdc0d83664fe6506b7c092"
+    },
+    {
+     "path": "designs/lg-cx-ohne-fuss/preview.jpg",
+     "size": 24995,
+     "sha256": "07d07520cb7a0bcf3081d055bf79b3bb7912336b2a81c5ecbcc5f6a3b8556ebd"
+    }
+   ],
+   "name_en": "LG CX – 4:3 without stand",
+   "description_en": "Virtual LG CX bezel: true black outside, blends into the real bezel on an OLED. 4:3 without stand, plus 2.35:1 and 2:1."
+  }
+ ]
+}

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings version="1">
+  <section id="service.tvframe43">
+    <category id="general" label="32000">
+      <group id="1">
+        <setting id="enabled" type="boolean" label="32001" help="32011">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
+        <setting id="overlay" type="boolean" label="32002" help="32012">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
+        <setting id="enable_wide" type="boolean" label="32008" help="32018">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
+        <setting id="include_livetv" type="boolean" label="32006" help="32016">
+          <level>1</level>
+          <default>false</default>
+          <control type="toggle"/>
+        </setting>
+      </group>
+    </category>
+    <category id="frame" label="32100">
+      <group id="1">
+        <setting id="choose" type="action" label="32310" help="32311">
+          <level>0</level>
+          <data>RunScript(service.tvframe43,select)</data>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="button" format="action">
+            <close>true</close>
+          </control>
+        </setting>
+        <setting id="gallery" type="action" label="32312" help="32313">
+          <level>0</level>
+          <data>RunScript(service.tvframe43,gallery)</data>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="button" format="action">
+            <close>true</close>
+          </control>
+        </setting>
+        <setting id="hotkey" type="integer" label="32320" help="32321">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32322">0</option>
+              <option label="32323">1</option>
+              <option label="32324">2</option>
+              <option label="32325">3</option>
+            </options>
+          </constraints>
+          <control type="list" format="string"/>
+        </setting>
+        <setting id="style_43" type="integer" label="32351" help="32111">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32304">-1</option>
+              <option label="32130">0</option>
+              <option label="32131">1</option>
+              <option label="32142">12</option>
+              <option label="32143">13</option>
+              <option label="32132">2</option>
+              <option label="32133">3</option>
+              <option label="32134">4</option>
+              <option label="32135">5</option>
+              <option label="32136">6</option>
+              <option label="32137">7</option>
+              <option label="32138">8</option>
+              <option label="32139">9</option>
+              <option label="32140">10</option>
+              <option label="32141">11</option>
+              <option label="32147">14</option>
+            </options>
+          </constraints>
+          <control type="list" format="string"/>
+        </setting>
+        <setting id="style_wide" type="integer" label="32352" help="32111">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32304">-1</option>
+              <option label="32130">0</option>
+              <option label="32131">1</option>
+              <option label="32142">12</option>
+              <option label="32143">13</option>
+              <option label="32132">2</option>
+              <option label="32133">3</option>
+              <option label="32134">4</option>
+              <option label="32135">5</option>
+              <option label="32136">6</option>
+              <option label="32137">7</option>
+              <option label="32138">8</option>
+              <option label="32139">9</option>
+              <option label="32140">10</option>
+              <option label="32141">11</option>
+              <option label="32147">14</option>
+            </options>
+          </constraints>
+          <control type="list" format="string"/>
+        </setting>
+        <setting id="style_w2" type="integer" label="32353" help="32111">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32304">-1</option>
+              <option label="32130">0</option>
+              <option label="32131">1</option>
+              <option label="32142">12</option>
+              <option label="32143">13</option>
+              <option label="32141">11</option>
+              <option label="32147">14</option>
+            </options>
+          </constraints>
+          <control type="list" format="string"/>
+        </setting>
+        <!-- bis 1.1.3: ein Stil fuer alle Formate; nur noch fuer die einmalige Uebernahme -->
+        <setting id="style2" type="integer" label="32101">
+          <level>4</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="32130">0</option>
+              <option label="32131">1</option>
+              <option label="32142">12</option>
+              <option label="32143">13</option>
+              <option label="32132">2</option>
+              <option label="32133">3</option>
+              <option label="32134">4</option>
+              <option label="32135">5</option>
+              <option label="32136">6</option>
+              <option label="32137">7</option>
+              <option label="32138">8</option>
+              <option label="32139">9</option>
+              <option label="32140">10</option>
+              <option label="32141">11</option>
+            </options>
+          </constraints>
+          <control type="list" format="string"/>
+        </setting>
+        <!-- ab 1.2.0: ID des Galerie-Designs, wenn style_43 = 14 -->
+        <setting id="gallery_43" type="string" label="32147">
+          <level>4</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string"/>
+        </setting>
+        <!-- ab 1.2.0: ID des Galerie-Designs, wenn style_wide = 14 -->
+        <setting id="gallery_wide" type="string" label="32147">
+          <level>4</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string"/>
+        </setting>
+        <!-- ab 1.2.0: ID des Galerie-Designs, wenn style_w2 = 14 -->
+        <setting id="gallery_w2" type="string" label="32147">
+          <level>4</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <control type="edit" format="string"/>
+        </setting>
+        <setting id="styles_migrated" type="boolean" label="32101">
+          <level>4</level>
+          <default>false</default>
+          <control type="toggle"/>
+        </setting>
+        <setting id="custom_43" type="path" label="32102" help="32112">
+          <level>0</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+            <writable>false</writable>
+            <masking>.png</masking>
+          </constraints>
+          <dependencies>
+            <dependency type="visible"><condition operator="is" setting="style_43">11</condition></dependency>
+          </dependencies>
+          <control type="button" format="file">
+            <heading>32102</heading>
+          </control>
+        </setting>
+        <setting id="custom_wide" type="path" label="32103" help="32112">
+          <level>0</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+            <writable>false</writable>
+            <masking>.png</masking>
+          </constraints>
+          <dependencies>
+            <dependency type="visible"><condition operator="is" setting="style_wide">11</condition></dependency>
+          </dependencies>
+          <control type="button" format="file">
+            <heading>32103</heading>
+          </control>
+        </setting>
+        <setting id="custom_w2" type="path" label="32106" help="32112">
+          <level>0</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+            <writable>false</writable>
+            <masking>.png</masking>
+          </constraints>
+          <dependencies>
+            <dependency type="visible"><condition operator="is" setting="style_w2">11</condition></dependency>
+          </dependencies>
+          <control type="button" format="file">
+            <heading>32106</heading>
+          </control>
+        </setting>
+        <setting id="zoom_override_43" type="number" label="32104" help="32114">
+          <level>1</level>
+          <default>0.00</default>
+          <constraints>
+            <minimum>0.00</minimum>
+            <step>0.01</step>
+            <maximum>1.00</maximum>
+          </constraints>
+          <control type="slider" format="number">
+            <popup>false</popup>
+          </control>
+        </setting>
+        <setting id="zoom_override_wide" type="number" label="32105" help="32114">
+          <level>1</level>
+          <default>0.00</default>
+          <constraints>
+            <minimum>0.00</minimum>
+            <step>0.01</step>
+            <maximum>1.00</maximum>
+          </constraints>
+          <control type="slider" format="number">
+            <popup>false</popup>
+          </control>
+        </setting>
+      </group>
+    </category>
+    <category id="detect" label="32200">
+      <group id="1">
+        <setting id="min_ratio" type="number" label="32004" help="32014">
+          <level>1</level>
+          <default>1.20</default>
+          <constraints><minimum>1.00</minimum><step>0.01</step><maximum>1.60</maximum></constraints>
+          <control type="slider" format="number"><popup>false</popup></control>
+        </setting>
+        <setting id="max_ratio" type="number" label="32005" help="32014">
+          <level>1</level>
+          <default>1.45</default>
+          <constraints><minimum>1.00</minimum><step>0.01</step><maximum>1.70</maximum></constraints>
+          <control type="slider" format="number"><popup>false</popup></control>
+        </setting>
+        <setting id="wide_min" type="number" label="32201" help="32211">
+          <level>1</level>
+          <default>2.10</default>
+          <constraints><minimum>1.85</minimum><step>0.01</step><maximum>2.80</maximum></constraints>
+          <control type="slider" format="number"><popup>false</popup></control>
+        </setting>
+        <setting id="wide_max" type="number" label="32202" help="32211">
+          <level>1</level>
+          <default>2.50</default>
+          <constraints><minimum>1.85</minimum><step>0.01</step><maximum>3.00</maximum></constraints>
+          <control type="slider" format="number"><popup>false</popup></control>
+        </setting>
+        <setting id="enable_w2" type="boolean" label="32330" help="32331">
+          <level>1</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
+        <setting id="w2_min" type="number" label="32332" help="32331">
+          <level>2</level>
+          <default>1.90</default>
+          <constraints><minimum>1.80</minimum><step>0.01</step><maximum>2.10</maximum></constraints>
+          <control type="slider" format="number"><popup>false</popup></control>
+        </setting>
+        <setting id="w2_max" type="number" label="32333" help="32331">
+          <level>2</level>
+          <default>2.08</default>
+          <constraints><minimum>1.90</minimum><step>0.01</step><maximum>2.15</maximum></constraints>
+          <control type="slider" format="number"><popup>false</popup></control>
+        </setting>
+        <setting id="debug" type="boolean" label="32007">
+          <level>2</level>
+          <default>false</default>
+          <control type="toggle"/>
+        </setting>
+      </group>
+    </category>
+  </section>
+</settings>

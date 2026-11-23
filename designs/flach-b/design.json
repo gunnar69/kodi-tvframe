@@ -1,0 +1,23 @@
+{
+ "schema": 1,
+ "id": "flach-b",
+ "name": "Flach B",
+ "name_en": "Flat B",
+ "author": "SARAH",
+ "version": "1.0.0",
+ "description": "Schlichter flacher Rahmen, Variante B. 4:3 und Breitbild 2,35:1.",
+ "description_en": "Plain flat frame, variant B. 4:3 and 2.35:1.",
+ "license": "CC0-1.0",
+ "rights_confirmed": true,
+ "preview": "preview.jpg",
+ "formats": {
+  "43": {
+   "image": "flatB_43.png",
+   "frame": "flatB_43.json"
+  },
+  "wide": {
+   "image": "flat_wide.png",
+   "frame": "flat_wide.json"
+  }
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "schema": 1,
+ "id": "lg-cx-gehaeuse-stoff",
+ "name": "LG CX – Gehäuse Stoff",
+ "name_en": "LG CX – cabinet, fabric",
+ "author": "SARAH",
+ "version": "1.0.0",
+ "description": "LG CX in einem Gehäuse mit Stoffbespannung; Breitbild und 2:1 mit Soundbar-Lochgitter unten.",
+ "description_en": "LG CX in a fabric-covered cabinet; widescreen and 2:1 with a perforated soundbar grille.",
+ "license": "CC0-1.0",
+ "rights_confirmed": true,
+ "preview": "preview.jpg",
+ "formats": {
+  "43": {
+   "image": "lg_cx_body_fabric.png",
+   "frame": "lg_cx_body_fabric.json"
+  },
+  "wide": {
+   "image": "lg_cx_wide_body.png",
+   "frame": "lg_cx_wide_body.json"
+  },
+  "w2": {
+   "image": "lg_cx_wide_body_2x1.png",
+   "frame": "lg_cx_wide_body_2x1.json"
+  }
+ }
+}

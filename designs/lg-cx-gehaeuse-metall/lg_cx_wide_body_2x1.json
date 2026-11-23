@@ -1,0 +1,22 @@
+{
+ "id": "lg_cx_wide_body_2x1",
+ "format": "2:1",
+ "image": "lg_cx_wide_body_2x1.png",
+ "canvas": [
+  1920,
+  1080
+ ],
+ "screen": {
+  "x": 26,
+  "y": 14,
+  "w": 1868,
+  "h": 928,
+  "radius": 6
+ },
+ "overlap": 6,
+ "design_aspect": 2.0,
+ "zoom": 0.9792,
+ "verticalshift": -0.8857,
+ "outside_black": false,
+ "name": "LG CX Gehäuse (2:1)"
+}

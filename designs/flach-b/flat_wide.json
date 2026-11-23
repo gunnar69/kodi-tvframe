@@ -1,0 +1,22 @@
+{
+ "id": "flat_wide",
+ "format": "2.35:1",
+ "image": "flat_wide.png",
+ "canvas": [
+  1920,
+  1080
+ ],
+ "screen": {
+  "x": 102,
+  "y": 10,
+  "w": 1716,
+  "h": 722,
+  "radius": 6
+ },
+ "overlap": 6,
+ "design_aspect": 2.35,
+ "zoom": 0.9,
+ "verticalshift": -0.9797,
+ "name": "Flach (Breitbild)",
+ "outside_black": false
+}

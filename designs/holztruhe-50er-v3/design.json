@@ -1,0 +1,23 @@
+{
+ "schema": 1,
+ "id": "holztruhe-50er-v3",
+ "name": "50er Holztruhe",
+ "name_en": "50s wooden console",
+ "author": "SARAH",
+ "version": "1.0.0",
+ "description": "Fernsehtruhe im Stil der 50er-Jahre aus Holz, Bild oben im Gehäuse. 4:3 und Breitbild 2,35:1.",
+ "description_en": "1950s style wooden TV console, picture at the top. 4:3 and 2.35:1.",
+ "license": "CC0-1.0",
+ "rights_confirmed": true,
+ "preview": "preview.jpg",
+ "formats": {
+  "43": {
+   "image": "wood50v3_43.png",
+   "frame": "wood50v3_43.json"
+  },
+  "wide": {
+   "image": "wood50v3_wide.png",
+   "frame": "wood50v3_wide.json"
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "lg_cx_body_fabric",
+ "format": "4:3",
+ "image": "lg_cx_body_fabric.png",
+ "canvas": [
+  1920,
+  1080
+ ],
+ "screen": {
+  "x": 261,
+  "y": 17,
+  "w": 1398,
+  "h": 1046,
+  "radius": 6
+ },
+ "overlap": 6,
+ "design_aspect": 1.3333,
+ "zoom": 0.9796,
+ "verticalshift": 0.0,
+ "outside_black": false,
+ "name": "LG CX Gehäuse Stoff (4:3)"
+}

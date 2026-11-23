@@ -1,0 +1,402 @@
+# Kodi Media Center language file
+# Addon id: service.tvframe43
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en_GB\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Enable TV frame"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Show TV cabinet overlay"
+msgstr ""
+
+msgctxt "#32004"
+msgid "4:3 from aspect ratio"
+msgstr ""
+
+msgctxt "#32005"
+msgid "4:3 up to aspect ratio"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Also for live TV"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Debug logging"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Also for widescreen films (2.35:1)"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Turns the feature on or off."
+msgstr ""
+
+msgctxt "#32012"
+msgid "Without the cabinet the picture is only shrunk."
+msgstr ""
+
+msgctxt "#32014"
+msgid "Videos within this aspect ratio range count as 4:3 (4:3 = 1.33)."
+msgstr ""
+
+msgctxt "#32016"
+msgid "By default only for movies, episodes and files."
+msgstr ""
+
+msgctxt "#32018"
+msgid "Cinemascope films get a TV with a broad frame above and below that hides the black bars."
+msgstr ""
+
+msgctxt "#32100"
+msgid "Frame"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Frame style"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Own file for 4:3"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Own file for widescreen"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Zoom 4:3 (0 = automatic)"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Zoom widescreen (0 = automatic)"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Each format has its own style; \"No frame\" leaves that format untouched. Zoom and vertical position are calculated from the screen area."
+msgstr ""
+
+msgctxt "#32112"
+msgid "PNG, ideally 1920x1080, with a transparent screen area. The screen is detected automatically. Empty = no frame for this format."
+msgstr ""
+
+msgctxt "#32114"
+msgid "0 = calculated from the screen area. Otherwise this zoom is used."
+msgstr ""
+
+msgctxt "#32200"
+msgid "Detection"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Widescreen from aspect ratio"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Widescreen up to aspect ratio"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Videos within this range get the widescreen frame (2.35:1 / 2.39:1)."
+msgstr ""
+
+msgctxt "#32130"
+msgid "LG CX - 4:3 without stand"
+msgstr ""
+
+msgctxt "#32131"
+msgid "LG CX - 4:3 with stand"
+msgstr ""
+
+msgctxt "#32132"
+msgid "50s wooden console (new)"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Flat A"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Flat B"
+msgstr ""
+
+msgctxt "#32135"
+msgid "50s wooden console (old)"
+msgstr ""
+
+msgctxt "#32136"
+msgid "60s space age (old)"
+msgstr ""
+
+msgctxt "#32137"
+msgid "70s orange plastic (old)"
+msgstr ""
+
+msgctxt "#32138"
+msgid "80s silver/black (old)"
+msgstr ""
+
+msgctxt "#32139"
+msgid "Minimalist light grey (old)"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Retro monitor (old)"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Own file"
+msgstr ""
+
+msgctxt "#32142"
+msgid "LG CX - cabinet, fabric"
+msgstr ""
+
+msgctxt "#32143"
+msgid "LG CX - cabinet, metal"
+msgstr ""
+
+msgctxt "#32300"
+msgid "Choose TV frame"
+msgstr ""
+
+msgctxt "#32301"
+msgid "active"
+msgstr ""
+
+msgctxt "#32302"
+msgid "Frame off (this video only)"
+msgstr ""
+
+msgctxt "#32303"
+msgid "Frame on again"
+msgstr ""
+
+msgctxt "#32310"
+msgid "Choose frame with preview…"
+msgstr ""
+
+msgctxt "#32311"
+msgid "Opens a list with preview images. During playback the frame changes immediately."
+msgstr ""
+
+msgctxt "#32320"
+msgid "Remote key for frame selection"
+msgstr ""
+
+msgctxt "#32321"
+msgid "Optional. Writes only the add-on's own keymap file (userdata/keymaps/tvframe43.xml) for fullscreen video; it is removed again when set to off. Long presses may not work on every remote."
+msgstr ""
+
+msgctxt "#32322"
+msgid "off"
+msgstr ""
+
+msgctxt "#32323"
+msgid "Red button"
+msgstr ""
+
+msgctxt "#32324"
+msgid "Menu button (long press)"
+msgstr ""
+
+msgctxt "#32325"
+msgid "OK button (long press)"
+msgstr ""
+
+msgctxt "#32330"
+msgid "Also for 2:1 (styles with a 2:1 frame)"
+msgstr ""
+
+msgctxt "#32331"
+msgid "2:1 material (e.g. many series) gets its own frame where the style has one."
+msgstr ""
+
+msgctxt "#32332"
+msgid "2:1 from aspect ratio"
+msgstr ""
+
+msgctxt "#32333"
+msgid "2:1 up to aspect ratio"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Own file for 2:1"
+msgstr ""
+
+msgctxt "#32144"
+msgid "LG CX"
+msgstr ""
+
+msgctxt "#32145"
+msgid "Flat (A/B)"
+msgstr ""
+
+msgctxt "#32146"
+msgid "LG CX - cabinet"
+msgstr ""
+
+msgctxt "#32304"
+msgid "No frame"
+msgstr ""
+
+msgctxt "#32350"
+msgid "Frame for %s"
+msgstr ""
+
+msgctxt "#32351"
+msgid "Frame for 4:3"
+msgstr ""
+
+msgctxt "#32352"
+msgid "Frame for widescreen (2.35:1)"
+msgstr ""
+
+msgctxt "#32353"
+msgid "Frame for 2:1"
+msgstr ""
+
+msgctxt "#32360"
+msgid "4:3"
+msgstr ""
+
+msgctxt "#32361"
+msgid "Widescreen 2.35:1"
+msgstr ""
+
+msgctxt "#32362"
+msgid "2:1"
+msgstr ""
+
+msgctxt "#32147"
+msgid "Design from the gallery"
+msgstr ""
+
+msgctxt "#32312"
+msgid "Designs from the gallery…"
+msgstr ""
+
+msgctxt "#32313"
+msgid "Downloads further frame designs from github.com/gunnar69/kodi-tvframe (data only, checksum-verified) into the add-on's profile folder. Installed designs then appear in the frame list of the formats they support. Own designs can be contributed there via pull request."
+msgstr ""
+
+msgctxt "#32400"
+msgid "Design gallery"
+msgstr ""
+
+msgctxt "#32402"
+msgid "Download more frames (internet)"
+msgstr ""
+
+msgctxt "#32403"
+msgid "Gallery design (not installed)"
+msgstr ""
+
+msgctxt "#32404"
+msgid "by %s"
+msgstr ""
+
+msgctxt "#32405"
+msgid "installed"
+msgstr ""
+
+msgctxt "#32406"
+msgid "update available"
+msgstr ""
+
+msgctxt "#32407"
+msgid "not installed"
+msgstr ""
+
+msgctxt "#32408"
+msgid "installed locally only (no longer in the gallery)"
+msgstr ""
+
+msgctxt "#32410"
+msgid "Install"
+msgstr ""
+
+msgctxt "#32411"
+msgid "Update"
+msgstr ""
+
+msgctxt "#32412"
+msgid "Download again"
+msgstr ""
+
+msgctxt "#32413"
+msgid "Remove"
+msgstr ""
+
+msgctxt "#32414"
+msgid "Really remove the design „%s“? Formats using it go back to the standard frame."
+msgstr ""
+
+msgctxt "#32415"
+msgid "„%s“ installed – now selectable in the frame list."
+msgstr ""
+
+msgctxt "#32416"
+msgid "„%s“ removed."
+msgstr ""
+
+msgctxt "#32417"
+msgid "Downloading design…"
+msgstr ""
+
+msgctxt "#32418"
+msgid "Formats: %s – download now?"
+msgstr ""
+
+msgctxt "#32419"
+msgid "Gallery not reachable – showing installed designs only."
+msgstr ""
+
+msgctxt "#32420"
+msgid "The gallery cannot be reached. Please check the internet connection and try again later."
+msgstr ""
+
+msgctxt "#32421"
+msgid "The gallery server answered with an error (%s). Please try again later."
+msgstr ""
+
+msgctxt "#32422"
+msgid "The gallery data are invalid or incomplete. Nothing was installed."
+msgstr ""
+
+msgctxt "#32423"
+msgid "Checksum mismatch for %s – the download is damaged or was altered. Nothing was installed."
+msgstr ""
+
+msgctxt "#32424"
+msgid "The design contains invalid file names or paths and was rejected for safety reasons. Nothing was installed."
+msgstr ""
+
+msgctxt "#32425"
+msgid "A file is larger than announced or allowed. Nothing was installed."
+msgstr ""
+
+msgctxt "#32426"
+msgid "The secure connection to the gallery failed (certificate check)."
+msgstr ""
+
+msgctxt "#32427"
+msgid "Cancelled."
+msgstr ""
+
+msgctxt "#32428"
+msgid "offline – last saved list"
+msgstr ""
+
+msgctxt "#32429"
+msgid "No designs found."
+msgstr ""

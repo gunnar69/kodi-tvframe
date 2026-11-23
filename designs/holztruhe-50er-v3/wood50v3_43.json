@@ -1,0 +1,22 @@
+{
+ "id": "wood50v3_43",
+ "format": "4:3",
+ "image": "wood50v3_43.png",
+ "canvas": [
+  1920,
+  1080
+ ],
+ "screen": {
+  "x": 304,
+  "y": 10,
+  "w": 1312,
+  "h": 980,
+  "radius": 34
+ },
+ "overlap": 6,
+ "design_aspect": 1.3333,
+ "zoom": 0.9194,
+ "verticalshift": -0.9195,
+ "name": "50er Holztruhe v3 (4:3)",
+ "outside_black": false
+}
