@@ -279,6 +279,11 @@
           <constraints><minimum>1.85</minimum><step>0.01</step><maximum>3.00</maximum></constraints>
           <control type="slider" format="number"><popup>false</popup></control>
         </setting>
+        <setting id="detect_bars" type="boolean" label="32340" help="32341">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle"/>
+        </setting>
         <setting id="enable_w2" type="boolean" label="32330" help="32331">
           <level>1</level>
           <default>true</default>

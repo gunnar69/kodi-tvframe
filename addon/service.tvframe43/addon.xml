@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.tvframe43" name="4:3-Röhrenfernseher" version="1.2.0" provider-name="SARAH">
+<addon id="service.tvframe43" name="4:3-Röhrenfernseher" version="1.3.0" provider-name="SARAH">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -10,12 +10,12 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="de_DE">Zeigt 4:3- und Breitbild-Videos in einem alten Fernsehgehäuse</summary>
     <summary lang="en_GB">Shows 4:3 and widescreen videos inside a vintage TV cabinet</summary>
-    <description lang="de_DE">4:3-Videos (ca. 1,20–1,45) und Breitbild-Filme (ca. 2,10–2,50) laufen in einem bildschirmfüllenden Fernsehgehäuse. Stile: LG CX (virtueller OLED-Rahmen), 50er Holztruhe, Flach A/B sowie die älteren Stile aus 1.1.0, eine eigene PNG-Datei oder weitere Designs aus der Online-Galerie (github.com/gunnar69/kodi-tvframe, eigene Designs per Pull Request). Der Zoom wird aus der Mattscheibe berechnet. 16:9 bleibt unangetastet.</description>
-    <description lang="en_GB">4:3 videos and cinemascope films play inside a full-screen vintage TV cabinet. Built-in styles, your own PNG or more designs from the online gallery (github.com/gunnar69/kodi-tvframe, contributions via pull request). Zoom is calculated from the screen area. 16:9 is left alone.</description>
+    <description lang="de_DE">4:3-Videos (ca. 1,20–1,45) und Breitbild-Filme (ca. 2,10–2,50) laufen in einem bildschirmfüllenden Fernsehgehäuse. Stile: LG CX (virtueller OLED-Rahmen), 50er Holztruhe, Flach A/B sowie die älteren Stile aus 1.1.0, eine eigene PNG-Datei oder weitere Designs aus der Online-Galerie (github.com/gunnar69/kodi-tvframe, eigene Designs per Pull Request). Der Zoom wird aus der Mattscheibe berechnet. Breitbild-Filme mit eingebrannten schwarzen Balken im 16:9-Bild werden erkannt (Einzelbilder aus der Datei, Ergebnis je Datei gemerkt) und bekommen ebenfalls ihren Rahmen. Echtes 16:9 bleibt unangetastet.</description>
+    <description lang="en_GB">4:3 videos and cinemascope films play inside a full-screen vintage TV cabinet. Built-in styles, your own PNG or more designs from the online gallery (github.com/gunnar69/kodi-tvframe, contributions via pull request). Zoom is calculated from the screen area. Cinemascope films with burned-in black bars inside a 16:9 picture are detected (still frames from the file, result remembered per file). Real 16:9 is left alone.</description>
     <platform>all</platform>
     <license>MIT</license>
     <source>https://github.com/gunnar69/kodi-tvframe</source>
-    <news>1.2.0: Design-Galerie – weitere Rahmen aus github.com/gunnar69/kodi-tvframe laden, aktualisieren und entfernen (nur Bilddaten, mit Prüfsumme); installierte Designs je Format wählbar. 1.1.4: Stil getrennt je Format (4:3, 2,35:1, 2:1), „Ohne Rahmen“ als eigener Eintrag in der Auswahl statt Ein/Aus-Schalter; ohne Wiedergabe erst Format, dann Stil wählen. 1.1.3: Rahmen verschwindet zuverlässig, Info/Pause ohne Rahmen. 1.1.2: Rahmen-Auswahl mit Vorschaubildern, LG CX mit Gehäuse, 2:1-Rahmen.</news>
+    <news>1.3.0: Eingebrannte schwarze Balken erkennen (Einstellung, Standard an) – 2,35/2,39- und 2:1-Filme im 16:9-Bild bekommen den passenden Rahmen. Messung über Einzelbilder aus der Datei (auch bei HDR/Dolby Vision), ersatzweise live; nur bei eindeutigem Ergebnis, einmal pro Datei, Rahmen erscheint nach der Messung. 1.2.0: Design-Galerie – weitere Rahmen aus github.com/gunnar69/kodi-tvframe laden, aktualisieren und entfernen (nur Bilddaten, mit Prüfsumme); installierte Designs je Format wählbar. 1.1.4: Stil getrennt je Format (4:3, 2,35:1, 2:1), „Ohne Rahmen“ als eigener Eintrag in der Auswahl statt Ein/Aus-Schalter; ohne Wiedergabe erst Format, dann Stil wählen. 1.1.3: Rahmen verschwindet zuverlässig, Info/Pause ohne Rahmen. 1.1.2: Rahmen-Auswahl mit Vorschaubildern, LG CX mit Gehäuse, 2:1-Rahmen.</news>
     <assets>
       <icon>icon.png</icon>
     </assets>

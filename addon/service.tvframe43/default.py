@@ -26,7 +26,8 @@ THUMBS = os.path.join(ADDON_PATH, "resources", "thumbs")
 
 from service import (DISPLAY_ORDER, STYLE_CUSTOM, STYLE_NONE, STYLES, STYLE_SETTING, FORMATS,
                      STYLE_GALLERY, GALLERY_SETTING, DESIGNS_DIR, GALLERY_CACHE,
-                     has_format, migrate_settings, video_ratio, Service)
+                     has_format, migrate_settings, video_ratio, Service,
+                     PROP_MEASURED, LB_MIN, LB_MAX)
 import gallery as G
 
 WINDOW_HOME = 10000
@@ -170,6 +171,12 @@ def playing_format(player):
         return None
     try:
         ratio, _ = video_ratio()
+        # 1.3.0: eingebrannte Balken - der Dienst meldet das gemessene Verhaeltnis des Bildinhalts
+        meas = xbmcgui.Window(10000).getProperty(PROP_MEASURED)
+        if ratio and meas and LB_MIN <= ratio <= LB_MAX:
+            f, _, r = meas.rpartition("|")
+            if f == playing_file(player):
+                ratio = float(r)
         return Service.classify(ratio) if ratio else None
     except Exception:
         return None

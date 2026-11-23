@@ -229,6 +229,14 @@ msgctxt "#32333"
 msgid "2:1 up to aspect ratio"
 msgstr ""
 
+msgctxt "#32340"
+msgid "Detect burned-in black bars"
+msgstr ""
+
+msgctxt "#32341"
+msgid "Many cinemascope films are stored as a full 16:9 picture with the black bars inside the image. The add-on then measures the real picture height (still frames from the file, measured once per file and remembered) and shows the film with the widescreen or 2:1 frame. If the measurement is not certain, nothing changes."
+msgstr ""
+
 msgctxt "#32106"
 msgid "Own file for 2:1"
 msgstr ""

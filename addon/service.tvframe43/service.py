@@ -5,6 +5,8 @@ Erkennt das Seitenverhaeltnis des laufenden Videos:
   ~4:3   (Standard 1.20-1.45) -> 4:3-Rahmen
   ~2.35  (Standard 2.10-2.50) -> Breitbild-Rahmen (breiter Rahmen oben/unten)
   sonst  (16:9 usw.)          -> nichts
+Ab 1.3.0: meldet Kodi ~16:9 (1.70-1.85), wird nach eingebrannten schwarzen Balken gesucht
+(letterbox.py). Ein 2,39-Film im 16:9-Bild wird dann wie ein Breitbild-Film behandelt.
 Das Overlay (PNG 1920x1080 mit transparenter Mattscheibe) liegt immer
 bildschirmfuellend auf dem Vollbild-Videofenster (12005). Der Zoom wird aus
 dem Mattscheiben-Rechteck berechnet (JSON neben dem PNG bzw. aus dem
@@ -24,6 +26,7 @@ import xbmcgui
 import xbmcvfs
 
 import gallery
+import letterbox
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo("id")
@@ -33,6 +36,9 @@ PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo("profile"))
 CACHE_FILE = os.path.join(PROFILE, "custom_frames.json")
 DESIGNS_DIR = os.path.join(PROFILE, "designs")         # ab 1.2.0: Designs aus der Galerie
 GALLERY_CACHE = os.path.join(PROFILE, "gallery")       # index.json + Vorschaubilder
+LETTERBOX_FILE = os.path.join(PROFILE, "letterbox.json")  # ab 1.3.0: gemessene Balken je Datei
+# Nur Videos, die Kodi als ~16:9 meldet, werden auf eingebrannte Balken untersucht
+LB_MIN, LB_MAX = 1.70, 1.85
 
 # Reihenfolge = Werte der Einstellung "style2" (ab 1.1.1; die alte Einstellung "style"
 # aus 1.1.0 wird ignoriert, weil sich die Bedeutung der Indizes geaendert hat).
@@ -121,6 +127,7 @@ def style_for(fmt):
 WINDOW_HOME = 10000
 PROP_PING = "tvframe43.ping"         # geaendert -> Dienst bewertet das laufende Video neu
 PROP_OFF = "tvframe43.off_for"       # nur noch zum Aufraeumen: 1.1.3 schaltete damit pro Datei ab
+PROP_MEASURED = "tvframe43.measured" # ab 1.3.0: "<datei>|<verhaeltnis>" bei eingebrannten Balken (fuer default.py)
 
 # Optionale Fernbedienungstaste: eigene Keymap-Datei (nur diese wird geschrieben/geloescht)
 KEYMAP_FILE = "special://userdata/keymaps/tvframe43.xml"
@@ -296,34 +303,64 @@ def video_ratio():
 
 # --- Geometrie ----------------------------------------------------------------
 
-def compute_view(frame, ratio):
+def compute_view(frame, ratio, container=None):
     """Zoom + verticalshift, damit ein Video mit DAR `ratio` die Mattscheibe deckt.
 
     Kodi zeigt bei Zoom 1.0 das Video eingepasst und mittig: schmaler als der
     Bildschirm -> volle Hoehe, breiter -> volle Breite. Custom-Zoom skaliert das
     zentriert. Alle Masse als Anteil des Bildschirms (unabhaengig von Aufloesung).
+
+    `container` (ab 1.3.0): Seitenverhaeltnis, das Kodi skaliert, wenn es vom Bildinhalt
+    abweicht - bei eingebrannten Balken 1.778 (16:9-Bild), `ratio` = gemessener Inhalt.
+
+    Rechnung (A = 16/9 Bildschirm, z = Zoom, Anteile der Bildschirmhoehe/-breite):
+      Container bei Zoom 1:   B_c = 1,          H_c = A / c        (c >= A)
+      Inhalt (ohne Balken):   B   = B_c,        H   = H_c * c / r = A / r
+      -> Breite/Hoehe des INHALTS sind bei echtem 2,35-Container (c = r = 2,35) und bei
+         2,35 im 16:9-Bild (c = 1,778, r = 2,35) identisch, also auch derselbe Zoom
+         z = max(need_w / B, need_h / H). Die bisherige Breitbild-Logik bleibt gueltig.
+      Unterschied nur beim Versatz: Kodi (CBaseRenderer::CalcDestRect) verschiebt um
+         |s| <= 1:  s * bb,  bb = max(0, (1 - z*H_c) / 2)   (schwarzer Rand des CONTAINERS)
+         |s| >  1:  bb + (|s| - 1) * sR,  sR = z*H_c bzw. (z*H_c + 1) / 2 wenn z*H_c > 1
+      Beim 16:9-Container ist z*H_c = z ~ 0,9-1,0 -> kaum Rand (bb klein), der Versatz der
+      Mattscheibe braucht dann den erweiterten Bereich bis +/-2. Fuer c == r bleibt die
+      bisherige Rechnung (linear, auf +/-1 begrenzt) unveraendert.
     """
     cw, ch = float(frame["canvas"][0]), float(frame["canvas"][1])
     sc = frame["screen"]
     ov = float(frame.get("overlap", 0))
     need_w = (sc["w"] + 2 * ov) / cw
     need_h = (sc["h"] + 2 * ov) / ch
-    if ratio <= SCREEN_ASPECT:
-        bw, bh = ratio / SCREEN_ASPECT, 1.0
+    cont = container or ratio
+    if cont <= SCREEN_ASPECT:
+        cbw, cbh = cont / SCREEN_ASPECT, 1.0
     else:
-        bw, bh = 1.0, SCREEN_ASPECT / ratio
+        cbw, cbh = 1.0, SCREEN_ASPECT / cont
+    if ratio >= cont:        # Inhalt niedriger als Container (Balken oben/unten) bzw. gleich
+        bw, bh = cbw, cbh * cont / ratio
+    else:                    # Inhalt schmaler (Balken links/rechts) - derzeit nicht genutzt
+        bw, bh = cbw * ratio / cont, cbh
     zoom = max(need_w / bw, need_h / bh)
     # vertikaler Versatz der Mattscheibe gegenueber der Bildmitte (Anteil, + = nach unten)
     dy = ((sc["y"] + sc["h"] / 2.0) - ch / 2.0) / ch
     shift = 0.0
     if abs(dy) > 0.002:
-        vh = bh * zoom
-        # Kodi: verticalshift verschiebt um shift * (freie Hoehe)/2
-        free = 1.0 - vh
-        shift = (2.0 * dy / free) if free > 0.01 else 2.0 * dy
-        # Kodi (CalcDestRect): |shift| <= 1 verschiebt innerhalb der Balken, darueber
-        # wird anders gerechnet -> auf den linearen Bereich begrenzen
-        shift = max(-1.0, min(1.0, shift))
+        vh = cbh * zoom      # Hoehe des CONTAINERS (Kodi rechnet den Versatz damit)
+        if abs(cont - ratio) < 1e-6:
+            # Kodi: verticalshift verschiebt um shift * (freie Hoehe)/2
+            free = 1.0 - vh
+            shift = (2.0 * dy / free) if free > 0.01 else 2.0 * dy
+            # Kodi (CalcDestRect): |shift| <= 1 verschiebt innerhalb der Balken, darueber
+            # wird anders gerechnet -> auf den linearen Bereich begrenzen
+            shift = max(-1.0, min(1.0, shift))
+        else:
+            bb = max(0.0, (1.0 - vh) / 2.0)
+            if bb > 1e-4 and abs(dy) <= bb:
+                shift = dy / bb
+            else:
+                sr = vh if vh <= 1.0 else (vh + 1.0) / 2.0
+                shift = (1.0 + (abs(dy) - bb) / sr) * (1.0 if dy > 0 else -1.0)
+            shift = max(-2.0, min(2.0, shift))
     return round(zoom, 4), round(shift, 4)
 
 
@@ -640,6 +677,11 @@ class Service(object):
         self.frames = FrameStore()
         self.pending = []
         self.last_ping = xbmcgui.Window(WINDOW_HOME).getProperty(PROP_PING)
+        # 1.3.0: Balken-Messung - Zwischenspeicher und laufende Messung (unabhaengig von
+        # reset_state(), weil deactivate() waehrend der Messung aufgerufen wird)
+        self.lb_cache = letterbox.LetterboxCache(LETTERBOX_FILE)
+        self.detector = None
+        self.lb_logged = None
         self.reset_state()
 
     def reset_state(self):
@@ -709,7 +751,81 @@ class Service(object):
             return "w2"
         return None
 
-    def reset_foreign_zoom(self, fmt, ratio):
+    # --- Eingebrannte Balken (1.3.0) ---------------------------------------------
+    def stop_detector(self):
+        if self.detector is not None:
+            self.detector.stop()
+            self.detector = None
+        self.lb_logged = None
+        xbmcgui.Window(WINDOW_HOME).clearProperty(PROP_MEASURED)
+
+    def _detector_done(self, det):
+        # aus dem Mess-Thread: nur vormerken, ausgewertet wird im Haupt-Takt
+        if det is self.detector:
+            self.request("letterbox")
+
+    def _render_allowed(self):
+        """Live-Proben nur, wenn das Video unverzerrt und ohne Anzeigen darueber laeuft."""
+        if self.active or not self.player.isPlayingVideo() or xbmc.getCondVisibility(OSD_CONDITION):
+            return False
+        vm = self.get_viewmode() or {}
+        try:
+            return str(vm.get("viewmode")) in ("normal", "original", "custom") and \
+                abs(float(vm.get("zoom", 1) or 1) - 1.0) < 0.01 and abs(float(vm.get("verticalshift", 0) or 0)) < 0.01
+        except Exception:
+            return False
+
+    def letterbox_ratio(self, reported):
+        """Gemessenes Seitenverhaeltnis des Bildinhalts bei eingebrannten Balken, sonst None.
+        Startet bei Bedarf eine Messung im Hintergrund (Ergebnis kommt spaeter per "letterbox")."""
+        if not setting_bool("detect_bars", True) or not (LB_MIN <= reported <= LB_MAX):
+            return None
+        try:
+            path = self.player.getPlayingFile()
+            dur = float(self.player.getTotalTime() or 0)
+        except Exception:
+            return None
+        if not letterbox.measurable_path(path) or xbmc.getCondVisibility("Pvr.IsPlayingTv"):
+            return None
+        if dur < letterbox.MIN_DURATION:
+            if self.lb_logged != path:
+                self.lb_logged = path
+                log("Balken-Messung: Laufzeit %d s zu kurz oder unbekannt - keine Messung" % dur)
+            return None
+        key = letterbox.cache_key(path, dur)
+        win = xbmcgui.Window(WINDOW_HOME)
+        hit = self.lb_cache.get(key)
+        if hit and hit.get("state") in ("bars", "full") or \
+                (hit and hit.get("state") == "unsure" and int(hit.get("tries", 0)) >= letterbox.UNSURE_RETRY):
+            if self.lb_logged != key:
+                self.lb_logged = key
+                log("Balken-Messung aus Zwischenspeicher: %s -> %s %s" % (key, hit.get("state"), hit.get("ratio") or ""))
+            if hit.get("state") == "bars" and hit.get("ratio"):
+                r = float(hit["ratio"])
+                win.setProperty(PROP_MEASURED, "%s|%.3f" % (path, r))
+                return r
+            win.clearProperty(PROP_MEASURED)
+            return None
+        det = self.detector
+        if det is not None and det.key == key:
+            if det.done and det.result[0] == "bars":
+                win.setProperty(PROP_MEASURED, "%s|%.3f" % (path, det.result[1]))
+                return det.result[1]
+            return None          # Messung laeuft noch bzw. ergab nichts
+        if det is not None:
+            det.stop()
+        try:
+            chapters = int(xbmc.getInfoLabel("Player.ChapterCount") or 0)
+        except Exception:
+            chapters = 0
+        self.detector = letterbox.Detector(path, reported, dur, chapters, self.lb_cache, self._detector_done,
+                                           lambda m: log(m), render_allowed=self._render_allowed, rpc=rpc)
+        self.lb_logged = key
+        log("Gemeldet %.3f (16:9) - suche eingebrannte Balken im Hintergrund, bis dahin kein Rahmen" % reported)
+        self.detector.start()
+        return None
+
+    def reset_foreign_zoom(self, fmt, ratio, container=None):
         """1.1.4, "ohne Rahmen": Kodi merkt sich die Ansicht pro Datei. Lief die Datei frueher mit
         Rahmen, startet sie mit unserem alten Zoom. Nur wenn die Ansicht exakt zu einem unserer
         Rahmen passt, auf normal zuruecksetzen - fremde Zoom-Einstellungen bleiben unberuehrt."""
@@ -728,12 +844,12 @@ class Service(object):
         for st in set(s[k] for s in STYLES if s and k < len(s)):
             fr = self.frames.template(st)
             if fr:
-                cands.append(compute_view(fr, ratio))
+                cands.append(compute_view(fr, ratio, container))
         try:
             for d in gallery.list_installed(DESIGNS_DIR):
                 fr = gallery.frame_for(DESIGNS_DIR, d["id"], fmt)
                 if fr:
-                    cands.append(compute_view(fr, ratio))
+                    cands.append(compute_view(fr, ratio, container))
         except Exception:
             pass
         for zc, shc in cands:
@@ -749,6 +865,12 @@ class Service(object):
         ratio, src = video_ratio()
         if ratio is None:
             return False  # spaeter nochmal
+        container = ratio
+        lb = self.letterbox_ratio(ratio)
+        if lb:
+            # 1.3.0: eingebrannte Balken - Format nach Bildinhalt, Zoom/Versatz fuer 16:9-Container
+            log("Gemeldet %.3f, eingebrannte Balken gemessen -> Bildinhalt %.3f" % (ratio, lb))
+            ratio, src = lb, src + "+balken"
         fmt = self.classify(ratio)
         if fmt and style_for(fmt) == STYLE_NONE:
             # derselbe Aufraeumpfad wie frueher "Rahmen aus": Overlay ueber das eine Overlay-Objekt
@@ -757,7 +879,7 @@ class Service(object):
             was_active = self.active
             self.deactivate(restore=was_active)
             if not was_active and self.player.isPlayingVideo():
-                self.reset_foreign_zoom(fmt, ratio)
+                self.reset_foreign_zoom(fmt, ratio, container)
             return True
         frame = self.frames.get(fmt) if fmt else None
         if fmt == "w2" and frame is None:
@@ -769,7 +891,7 @@ class Service(object):
                 log("Seitenverhaeltnis %.3f (%s) -> nichts zu tun" % (ratio, src))
             self.deactivate(restore=self.active)
             return True
-        zoom, shift = compute_view(frame, ratio)
+        zoom, shift = compute_view(frame, ratio, container)
         override = setting_num("zoom_override_" + fmt, 0.0)
         if override > 0:
             zoom = round(min(1.0, max(0.3, override)), 4)
@@ -803,9 +925,16 @@ class Service(object):
         while self.pending:
             what = self.pending.pop(0)
             if what == "stop":
+                self.stop_detector()
                 self.deactivate(restore=False)
             elif what == "newitem":
+                self.stop_detector()
                 self.overlay.hide()
+            elif what == "letterbox":
+                # Messung fertig -> neu bewerten (Rahmen ggf. nachtraeglich einblenden)
+                if self.player.isPlayingVideo():
+                    self.evaluating = True
+                    self.eval_tries = 0
             elif what in ("evaluate", "settings"):
                 if what == "settings":
                     self.frames.prefetch()
@@ -820,6 +949,8 @@ class Service(object):
             if self.evaluate() or self.eval_tries >= 20:
                 self.evaluating = False
 
+        if self.detector is not None and not self.player.isPlayingVideo():
+            self.stop_detector()
         if not self.active:
             return
         if not self.player.isPlayingVideo():
@@ -874,6 +1005,7 @@ class Service(object):
             if self.monitor.waitForAbort(TICK):
                 break
         try:
+            self.stop_detector()
             self.deactivate(restore=self.active)
         except Exception:
             pass
