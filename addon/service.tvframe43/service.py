@@ -304,11 +304,19 @@ def video_ratio():
 # --- Geometrie ----------------------------------------------------------------
 
 def compute_view(frame, ratio, container=None):
-    """Zoom + verticalshift, damit ein Video mit DAR `ratio` die Mattscheibe deckt.
+    """Zoom + verticalshift (siehe compute_layout, ohne Rahmen-Versatz)."""
+    z, sh, _ = compute_layout(frame, ratio, container)
+    return z, sh
+
+
+def compute_layout(frame, ratio, container=None):
+    """Zoom, verticalshift und Rahmen-Versatz, damit ein Video mit DAR `ratio` die Mattscheibe deckt.
 
     Kodi zeigt bei Zoom 1.0 das Video eingepasst und mittig: schmaler als der
     Bildschirm -> volle Hoehe, breiter -> volle Breite. Custom-Zoom skaliert das
     zentriert. Alle Masse als Anteil des Bildschirms (unabhaengig von Aufloesung).
+    Rueckgabe (zoom, shift, oy): oy = Verschiebung des Rahmen-Overlays als Anteil der
+    Bildschirmhoehe (+ = nach unten), 0 ausser bei eingebrannten Balken.
 
     `container` (ab 1.3.0): Seitenverhaeltnis, das Kodi skaliert, wenn es vom Bildinhalt
     abweicht - bei eingebrannten Balken 1.778 (16:9-Bild), `ratio` = gemessener Inhalt.
@@ -318,13 +326,16 @@ def compute_view(frame, ratio, container=None):
       Inhalt (ohne Balken):   B   = B_c,        H   = H_c * c / r = A / r
       -> Breite/Hoehe des INHALTS sind bei echtem 2,35-Container (c = r = 2,35) und bei
          2,35 im 16:9-Bild (c = 1,778, r = 2,35) identisch, also auch derselbe Zoom
-         z = max(need_w / B, need_h / H). Die bisherige Breitbild-Logik bleibt gueltig.
-      Unterschied nur beim Versatz: Kodi (CBaseRenderer::CalcDestRect) verschiebt um
-         |s| <= 1:  s * bb,  bb = max(0, (1 - z*H_c) / 2)   (schwarzer Rand des CONTAINERS)
-         |s| >  1:  bb + (|s| - 1) * sR,  sR = z*H_c bzw. (z*H_c + 1) / 2 wenn z*H_c > 1
-      Beim 16:9-Container ist z*H_c = z ~ 0,9-1,0 -> kaum Rand (bb klein), der Versatz der
-      Mattscheibe braucht dann den erweiterten Bereich bis +/-2. Fuer c == r bleibt die
-      bisherige Rechnung (linear, auf +/-1 begrenzt) unveraendert.
+         z = max(need_w / B, need_h / H).
+      Versatz: Kodi (CBaseRenderer::CalcDestRect) verschiebt den CONTAINER um
+         |s| <= 1:  s * bb,  bb = max(0, (1 - z*H_c) / 2)   (schwarzer Rand des Containers)
+         |s| >  1:  zusaetzlich (|s| - 1) * sR -> Container ragt aus dem Bildschirm.
+    1.3.1: Beim 16:9-Container ist z*H_c ~ 1 -> bb ~ 0; die Mattscheibe liesse sich nur mit
+      |s| > 1 erreichen. Das rechnet Kodi zwar richtig, aber auf der Box (Android, MediaCodec
+      Surface, Dolby Vision) bleibt das Bild dann einfach mittig (Befund Oblivion 23.11.2026).
+      Deshalb bei eingebrannten Balken: Video nur innerhalb des Bildschirms verschieben
+      (|s| <= 1) und den Rest ueber das Rahmen-Overlay ausgleichen - der Rahmen wandert
+      dorthin, wo der Bildinhalt tatsaechlich liegt. Fuer c == r unveraendert.
     """
     cw, ch = float(frame["canvas"][0]), float(frame["canvas"][1])
     sc = frame["screen"]
@@ -343,7 +354,7 @@ def compute_view(frame, ratio, container=None):
     zoom = max(need_w / bw, need_h / bh)
     # vertikaler Versatz der Mattscheibe gegenueber der Bildmitte (Anteil, + = nach unten)
     dy = ((sc["y"] + sc["h"] / 2.0) - ch / 2.0) / ch
-    shift = 0.0
+    shift, oy = 0.0, 0.0
     if abs(dy) > 0.002:
         vh = cbh * zoom      # Hoehe des CONTAINERS (Kodi rechnet den Versatz damit)
         if abs(cont - ratio) < 1e-6:
@@ -355,13 +366,14 @@ def compute_view(frame, ratio, container=None):
             shift = max(-1.0, min(1.0, shift))
         else:
             bb = max(0.0, (1.0 - vh) / 2.0)
-            if bb > 1e-4 and abs(dy) <= bb:
-                shift = dy / bb
-            else:
-                sr = vh if vh <= 1.0 else (vh + 1.0) / 2.0
-                shift = (1.0 + (abs(dy) - bb) / sr) * (1.0 if dy > 0 else -1.0)
-            shift = max(-2.0, min(2.0, shift))
-    return round(zoom, 4), round(shift, 4)
+            if bb > 0.002:
+                shift = max(-1.0, min(1.0, dy / bb))
+            # Rest (Mattscheibe weiter vom Bildinhalt entfernt als der Container-Rand
+            # erlaubt) -> Rahmen verschieben: Mattscheibenmitte auf die Inhaltsmitte
+            oy = -(dy - shift * bb)
+            if abs(oy) < 0.5 / ch:
+                oy = 0.0
+    return round(zoom, 4), round(shift, 4), round(oy, 5)
 
 
 # --- PNG-Alpha lesen (eigene Datei, ohne PIL) ------------------------------------
@@ -586,6 +598,7 @@ class Overlay(object):
         self.ctrl = None
         self.ctrl_id = None
         self.image = None
+        self.offset = 0          # 1.3.1: senkrechter Versatz in Skin-Pixeln (+ = nach unten)
 
     def _attached(self):
         if self.ctrl_id is None:
@@ -596,19 +609,22 @@ class Overlay(object):
         except Exception:
             return False
 
-    def show(self, image):
-        if self.image == image and self._attached():
+    def show(self, image, oy=0.0):
+        """`oy`: Versatz als Anteil der Bildschirmhoehe (1.3.1, eingebrannte Balken)."""
+        sw, sh = skin_resolution()
+        offset = int(round(oy * sh))
+        if self.image == image and self.offset == offset and self._attached():
             return
         self.hide()
         if not xbmcvfs.exists(image):
             log("Overlay fehlt: %s" % image, xbmc.LOGERROR)
             return
-        sw, sh = skin_resolution()
         try:
-            ctrl = xbmcgui.ControlImage(0, 0, sw, sh, image, aspectRatio=0)
+            ctrl = xbmcgui.ControlImage(0, offset, sw, sh, image, aspectRatio=0)
             self.win.addControl(ctrl)
-            self.ctrl, self.ctrl_id, self.image = ctrl, ctrl.getId(), image
-            log("Overlay eingeblendet: %s (Skin %dx%d, id %s)" % (os.path.basename(image), sw, sh, self.ctrl_id))
+            self.ctrl, self.ctrl_id, self.image, self.offset = ctrl, ctrl.getId(), image, offset
+            log("Overlay eingeblendet: %s (Skin %dx%d, id %s%s)" % (
+                os.path.basename(image), sw, sh, self.ctrl_id, (", Versatz %+d px" % offset) if offset else ""))
         except Exception as e:
             log("Overlay konnte nicht eingeblendet werden: %s" % e, xbmc.LOGWARNING)
 
@@ -634,6 +650,7 @@ class Overlay(object):
         self.ctrl = None
         self.ctrl_id = None
         self.image = None
+        self.offset = 0
 
 
 class TVFramePlayer(xbmc.Player):
@@ -690,6 +707,8 @@ class Service(object):
         self.frame = None
         self.target_zoom = None
         self.target_shift = 0.0
+        self.target_oy = 0.0         # 1.3.1: Rahmen-Versatz (Anteil Bildschirmhoehe)
+        self.applied_sig = None      # 1.3.1: zuletzt angewandtes Ergebnis (gegen Rueckkopplung)
         self.applied_at = 0.0
         self.reapplied = 0
         self.saved_viewmode = None
@@ -852,8 +871,10 @@ class Service(object):
                     cands.append(compute_view(fr, ratio, container))
         except Exception:
             pass
+        legacy = container is not None and abs(container - ratio) > 1e-6
         for zc, shc in cands:
-            if abs(z - zc) < 0.011 and (shc is None or abs(sh - shc) < 0.02):
+            # 1.3.0 hat bei eingebrannten Balken |verticalshift| > 1 gesetzt (gleicher Zoom)
+            if abs(z - zc) < 0.011 and (shc is None or abs(sh - shc) < 0.02 or (legacy and abs(sh) > 1.0)):
                 rpc("Player.SetViewMode", {"viewmode": "normal"})
                 log("Ohne Rahmen: alte Rahmen-Ansicht (Zoom %.4f) auf normal zurueckgesetzt" % z)
                 return
@@ -867,9 +888,10 @@ class Service(object):
             return False  # spaeter nochmal
         container = ratio
         lb = self.letterbox_ratio(ratio)
+        lb_msg = None
         if lb:
             # 1.3.0: eingebrannte Balken - Format nach Bildinhalt, Zoom/Versatz fuer 16:9-Container
-            log("Gemeldet %.3f, eingebrannte Balken gemessen -> Bildinhalt %.3f" % (ratio, lb))
+            lb_msg = "Gemeldet %.3f, eingebrannte Balken gemessen -> Bildinhalt %.3f" % (ratio, lb)
             ratio, src = lb, src + "+balken"
         fmt = self.classify(ratio)
         if fmt and style_for(fmt) == STYLE_NONE:
@@ -891,20 +913,30 @@ class Service(object):
                 log("Seitenverhaeltnis %.3f (%s) -> nichts zu tun" % (ratio, src))
             self.deactivate(restore=self.active)
             return True
-        zoom, shift = compute_view(frame, ratio, container)
+        zoom, shift, oy = compute_layout(frame, ratio, container)
         override = setting_num("zoom_override_" + fmt, 0.0)
         if override > 0:
             zoom = round(min(1.0, max(0.3, override)), 4)
-        log("Seitenverhaeltnis %.3f (%s) -> Rahmen %s/%s, Zoom %.4f, Versatz %.4f%s" % (
-            ratio, src, frame.get("id"), fmt, zoom, shift, " (manuell)" if override > 0 else ""))
         vm = self.get_viewmode()
+        # 1.3.1: Kodi meldet jedes SetViewMode per onAVChange zurueck -> ohne diese Pruefung
+        # wurde alle 0,6 s neu bewertet und neu gesetzt. Unveraendert und noch unsere Ansicht
+        # -> nichts tun.
+        sig = (fmt, frame.get("id"), frame.get("image"), zoom, shift, oy)
+        if self.active and sig == self.applied_sig and self.is_ours(vm):
+            return True
+        if lb_msg:
+            log(lb_msg)
+        log("Seitenverhaeltnis %.3f (%s) -> Rahmen %s/%s, Zoom %.4f, Versatz %.4f%s%s" % (
+            ratio, src, frame.get("id"), fmt, zoom, shift,
+            (", Rahmen %+.4f" % oy) if oy else "", " (manuell)" if override > 0 else ""))
         if not self.active and vm and not self.is_ours(vm):
             self.saved_viewmode = vm
         if self.fmt and self.fmt != fmt:
             self.overlay.hide()
         self.active = True
         self.fmt, self.frame = fmt, frame
-        self.target_zoom, self.target_shift = zoom, shift
+        self.target_zoom, self.target_shift, self.target_oy = zoom, shift, oy
+        self.applied_sig = sig
         self.set_view()
         self.applied_at = time.time()
         self.reapplied = 0
@@ -977,7 +1009,7 @@ class Service(object):
                     log("Info/Pause-Anzeige aktiv - Rahmen ausgeblendet")
                     self.overlay.hide()
             else:
-                self.overlay.show(self.frame["image"])
+                self.overlay.show(self.frame["image"], self.target_oy)
         elif not ours:
             self.overlay.hide()
 
