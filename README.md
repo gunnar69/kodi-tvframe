@@ -64,6 +64,8 @@ Koordinaten-JSON je Format (wie `addon/service.tvframe43/resources/frames/*.json
 
 `screen` ist das Rechteck der transparenten Mattscheibe in Pixeln. `overlap` gibt an, wie viele Pixel der Rahmen über das Video ragen darf. Danach `python3 tools/build_index.py` ausführen und `index.json` mit committen.
 
+Optional (ab Add-on 1.3.2): `"centered": {"image": "mein_wide_c.png", "frame": "mein_wide_c.json"}` je Format. Gemeint ist eine Variante, bei der die Mattscheibe genau mittig im Bild sitzt (`y = (1080 - h) / 2`, gleiche Breite und Höhe). Das Add-on nutzt sie bei Filmen mit eingebrannten schwarzen Balken, denn dort liegt der Bildinhalt immer in der Mitte und lässt sich nicht verschieben. Fehlt die Variante, verschiebt das Add-on stattdessen den normalen Rahmen. Ältere Add-on-Versionen ignorieren das Feld.
+
 ## Rechte und Lizenz
 
 - Der **Code** steht unter der MIT-Lizenz (siehe `LICENSE`).

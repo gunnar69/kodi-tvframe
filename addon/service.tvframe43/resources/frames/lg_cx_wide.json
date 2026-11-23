@@ -18,5 +18,6 @@
  "zoom": 1.0,
  "verticalshift": -1.0,
  "outside_black": true,
- "name": "LG CX Breitbild"
+ "name": "LG CX Breitbild",
+ "centered": "lg_cx_wide_c"
 }

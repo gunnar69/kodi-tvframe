@@ -336,6 +336,20 @@ def compute_layout(frame, ratio, container=None):
       Deshalb bei eingebrannten Balken: Video nur innerhalb des Bildschirms verschieben
       (|s| <= 1) und den Rest ueber das Rahmen-Overlay ausgleichen - der Rahmen wandert
       dorthin, wo der Bildinhalt tatsaechlich liegt. Fuer c == r unveraendert.
+    1.3.2: Der verschobene Rahmen schnitt unten Standfuss/Soundbar ab. Deshalb gibt es je Stil
+      (soweit vorhanden) eine Variante "<stamm>_c" (Feld "centered" im JSON bzw. in design.json),
+      erzeugt mit _build/make_centered.py: gleiche Mattscheibe w x h, aber y = (H - h) / 2, also
+      Mitte exakt auf der Bildmitte (dy ~ 0). Dann gilt hier: shift = 0, oy = 0, und der Zoom ist
+      derselbe wie oben (Breite/Hoehe des Inhalts haengen nicht vom Container ab). Beispiel LG CX
+      Gehaeuse (Mattscheibe 1868 x 788, Design ~2,37:1) im 1080p-Raster:
+        need_w = 1880/1920 = 0,9792   need_h = 800/1080 = 0,7407
+        2,39 im 16:9-Bild: Inhalt 1920 x 803 bei Zoom 1 -> z = max(0,9792, 0,7407/0,7439) = 0,9958
+                          -> Inhalt 1912 x 800, mittig y 140..940; Mattscheibe 146..934 (+6 Ueberlappung)
+        2,35 / 2,40 analog (z 0,9792 bzw. 0,9999), 2,2: z = 0,9792, Inhalt 855 hoch -> oben/unten
+        je ~33 px unter Rahmen + deckend schwarzem Bereich ueber/unter dem Gehaeuse (outside_black).
+      Ein Rahmen je Format reicht also; der Zoom gleicht die Seitenverhaeltnisse 2,2..2,40 (bzw.
+      1,92..2,05 beim 2:1-Rahmen) aus. Echte Breitbild-Container und 4:3 nutzen weiter die
+      normalen Rahmen (dort verschiebt Kodi das Bild korrekt per verticalshift).
     """
     cw, ch = float(frame["canvas"][0]), float(frame["canvas"][1])
     sc = frame["screen"]
@@ -564,6 +578,22 @@ class FrameStore(object):
             log("Galerie-Design '%s' fuer %s nicht installiert oder ohne dieses Format" % (did, fmt),
                 xbmc.LOGWARNING)
         return fr
+
+    def centered(self, frame, fmt):
+        """1.3.2: Variante mit mittiger Mattscheibe fuer eingebrannte Balken, sonst None.
+        Vorlagen: Feld "centered" im JSON (Datei-Stamm, z.B. lg_cx_wide_body_c); Galerie:
+        formats.<fmt>.centered in design.json; eigene Dateien: keine."""
+        if not frame:
+            return None
+        fid = str(frame.get("id") or "")
+        if fid.startswith("dl:"):
+            if not frame.get("centered"):
+                return None
+            return gallery.frame_for(DESIGNS_DIR, fid[3:].split("/")[0], fmt, centered=True)
+        name = frame.get("centered")
+        if not name or not isinstance(name, str):
+            return None
+        return self.template(name)
 
     def get(self, fmt):
         idx = style_for(fmt)
@@ -862,13 +892,15 @@ class Service(object):
         k = FORMATS.index(fmt)
         for st in set(s[k] for s in STYLES if s and k < len(s)):
             fr = self.frames.template(st)
-            if fr:
-                cands.append(compute_view(fr, ratio, container))
+            for f in (fr, self.frames.centered(fr, fmt)):     # 1.3.2: auch mittige Variante
+                if f:
+                    cands.append(compute_view(f, ratio, container))
         try:
             for d in gallery.list_installed(DESIGNS_DIR):
                 fr = gallery.frame_for(DESIGNS_DIR, d["id"], fmt)
-                if fr:
-                    cands.append(compute_view(fr, ratio, container))
+                for f in (fr, self.frames.centered(fr, fmt)):
+                    if f:
+                        cands.append(compute_view(f, ratio, container))
         except Exception:
             pass
         legacy = container is not None and abs(container - ratio) > 1e-6
@@ -913,6 +945,14 @@ class Service(object):
                 log("Seitenverhaeltnis %.3f (%s) -> nichts zu tun" % (ratio, src))
             self.deactivate(restore=self.active)
             return True
+        if lb and abs(container - ratio) > 1e-6:
+            # 1.3.2: eingebrannte Balken -> Rahmenvariante mit mittiger Mattscheibe (Bild bleibt
+            # mittig, nichts wird verschoben). Ohne Variante: Verhalten von 1.3.1 (Rahmen-Versatz).
+            cen = self.frames.centered(frame, fmt)
+            if cen:
+                frame = cen
+            elif lb_msg:
+                lb_msg += " (keine mittige Rahmenvariante - Rahmen wird verschoben)"
         zoom, shift, oy = compute_layout(frame, ratio, container)
         override = setting_num("zoom_override_" + fmt, 0.0)
         if override > 0:

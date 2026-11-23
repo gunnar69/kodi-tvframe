@@ -4,9 +4,9 @@
  "name": "LG CX – 4:3 mit Fuß",
  "name_en": "LG CX – 4:3 with stand",
  "author": "SARAH",
- "version": "1.0.0",
- "description": "Wie „LG CX ohne Fuß“, im 4:3-Format mit angedeutetem Standfuß (Bild sitzt oben).",
- "description_en": "Like “LG CX without stand”, 4:3 with a hinted stand (picture sits at the top).",
+ "version": "1.1.0",
+ "description": "Wie „LG CX ohne Fuß“, im 4:3-Format mit angedeutetem Standfuß (Bild sitzt oben). Mit mittiger Rahmenvariante für Filme mit eingebrannten Balken (ab Add-on 1.3.2).",
+ "description_en": "Like “LG CX without stand”, 4:3 with a hinted stand (picture sits at the top). Includes a centred variant for films with burned-in black bars (add-on 1.3.2+).",
  "license": "CC0-1.0",
  "rights_confirmed": true,
  "preview": "preview.jpg",
@@ -17,11 +17,19 @@
   },
   "wide": {
    "image": "lg_cx_wide.png",
-   "frame": "lg_cx_wide.json"
+   "frame": "lg_cx_wide.json",
+   "centered": {
+    "image": "lg_cx_wide_c.png",
+    "frame": "lg_cx_wide_c.json"
+   }
   },
   "w2": {
    "image": "lg_cx_wide_2x1.png",
-   "frame": "lg_cx_wide_2x1.json"
+   "frame": "lg_cx_wide_2x1.json",
+   "centered": {
+    "image": "lg_cx_wide_2x1_c.png",
+    "frame": "lg_cx_wide_2x1_c.json"
+   }
   }
  }
 }

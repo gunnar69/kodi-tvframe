@@ -70,8 +70,16 @@ def build_entry(did, errors):
     elif os.path.getsize(os.path.join(folder, d["preview"])) > G.MAX_PREVIEW:
         fail(errors, did, "Vorschaubild zu gross")
     used = {G.DESIGN_FILE, d["preview"]}
-    for spec in d["formats"].values():
+    for fmt, spec in d["formats"].items():
         used.update((spec["image"], spec["frame"]))
+        # ab Add-on 1.3.2 optional: Variante mit mittiger Mattscheibe (eingebrannte Balken)
+        cen = (raw.get("formats", {}).get(fmt) or {}).get("centered")
+        if cen is not None:
+            if "centered" not in spec:
+                fail(errors, did, "design.json: Format %s: \"centered\" ungueltig (image/frame .png/.json, "
+                     "Dateien vorhanden, canvas passt)" % fmt)
+            else:
+                used.update((spec["centered"]["image"], spec["centered"]["frame"]))
     for n in names:
         if n not in used:
             fail(errors, did, "%s wird von design.json nicht verwendet" % n)

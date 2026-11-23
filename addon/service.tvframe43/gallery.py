@@ -160,6 +160,20 @@ def validate_design(d, did, read):
         if [w, h] != frame["canvas"]:
             raise GalleryError("invalid", "%s: %dx%d passt nicht zu canvas %s" % (img, w, h, frame["canvas"]))
         out["formats"][fmt] = {"image": img, "frame": frm}
+        # ab 1.3.2 optional: "centered": {"image", "frame"} = Variante mit mittiger Mattscheibe
+        # fuer Filme mit eingebrannten Balken. Fehlerhaft -> einfach ignorieren (Fallback).
+        cen = spec.get("centered")
+        if isinstance(cen, dict):
+            ci, cf = cen.get("image"), cen.get("frame")
+            try:
+                if not (safe_name(ci) and ci.endswith(".png") and safe_name(cf) and cf.endswith(".json")):
+                    raise GalleryError("path", "centered")
+                cfr = validate_frame(json.loads(read(cf).decode("utf-8")), cf)
+                if list(png_size(read(ci))) != cfr["canvas"]:
+                    raise GalleryError("invalid", "centered canvas")
+                out["formats"][fmt]["centered"] = {"image": ci, "frame": cf}
+            except Exception:
+                pass
     if not out["formats"]:
         raise GalleryError("invalid", "design.json: kein bekanntes Format")
     pv = d.get("preview")
@@ -456,19 +470,26 @@ def list_installed(designs_dir):
     return out
 
 
-def frame_for(designs_dir, did, fmt):
-    """Rahmen-Beschreibung eines installierten Designs fuer ein Format (wie FrameStore.template)."""
+def frame_for(designs_dir, did, fmt, centered=False):
+    """Rahmen-Beschreibung eines installierten Designs fuer ein Format (wie FrameStore.template).
+    `centered` (1.3.2): Variante fuer eingebrannte Balken, None wenn das Design keine hat."""
     d = load_design(designs_dir, did)
     if not d or fmt not in d["formats"]:
         return None
     spec = d["formats"][fmt]
+    if centered:
+        spec = spec.get("centered")
+        if not spec:
+            return None
     try:
         with open(os.path.join(d["dir"], spec["frame"]), "rb") as f:
             meta = validate_frame(json.loads(f.read().decode("utf-8")), spec["frame"])
     except Exception:
         return None
-    meta["id"] = "dl:%s/%s" % (did, fmt)
+    meta["id"] = "dl:%s/%s%s" % (did, fmt, "/c" if centered else "")
     meta["image"] = os.path.join(d["dir"], spec["image"])
+    if not centered and spec.get("centered"):
+        meta["centered"] = True       # Variante vorhanden (frame_for(..., centered=True))
     return meta
 
 

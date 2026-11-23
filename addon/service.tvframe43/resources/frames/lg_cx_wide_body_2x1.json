@@ -18,5 +18,6 @@
  "zoom": 0.9792,
  "verticalshift": -0.8857,
  "outside_black": false,
- "name": "LG CX Gehäuse (2:1)"
+ "name": "LG CX Gehäuse (2:1)",
+ "centered": "lg_cx_wide_body_2x1_c"
 }

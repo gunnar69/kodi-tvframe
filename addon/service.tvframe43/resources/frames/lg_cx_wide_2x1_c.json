@@ -1,0 +1,24 @@
+{
+ "id": "lg_cx_wide_2x1_c",
+ "format": "2:1",
+ "image": "lg_cx_wide_2x1_c.png",
+ "canvas": [
+  1920,
+  1080
+ ],
+ "screen": {
+  "x": 6,
+  "y": 66,
+  "w": 1908,
+  "h": 948,
+  "radius": 6
+ },
+ "overlap": 6,
+ "design_aspect": 2.0,
+ "zoom": 1.0,
+ "verticalshift": 0.0,
+ "outside_black": true,
+ "name": "LG CX (2:1) – mittig (eingebrannte Balken)",
+ "centered_of": "lg_cx_wide_2x1",
+ "note": "1.3.2: Variante fuer eingebrannte Balken - Mattscheibe mittig (y=(H-h)/2), Video ohne Versatz; erzeugt mit _build/make_centered.py"
+}
