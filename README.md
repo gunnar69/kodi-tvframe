@@ -7,11 +7,34 @@ Dieses Repo enthält
 - `designs/<id>/` – die **Design-Galerie**: zusätzliche Rahmen, die das Add-on herunterladen kann,
 - `index.json` – die Liste aller Designs mit Prüfsummen (wird von `tools/build_index.py` erzeugt).
 
-## Installation
+- `addon/repository.tvframe43/` – das Repository-Add-on „TV-Rahmen Repository“,
+- `repo/` – das Kodi-Repository (addons.xml, Prüfsummen, Zips), erzeugt von `tools/build_repo.py`.
 
-1. Zip bauen: den Ordner `addon/service.tvframe43` als `service.tvframe43.zip` packen. Der Ordner muss dabei die oberste Ebene im Zip sein.
-2. In Kodi: *Einstellungen → Add-ons → Aus ZIP-Datei installieren*. Eventuell muss vorher „Unbekannte Quellen“ erlaubt werden.
-3. Rahmen wählen: *Add-on-Einstellungen → Rahmen auswählen (mit Vorschau)* oder während der Wiedergabe über die optional belegbare Taste.
+## Installation & automatische Updates
+
+Am einfachsten über das **TV-Rahmen Repository**. Es wird einmal installiert, danach findet Kodi neue Versionen selbst. Gehostet wird es direkt aus diesem GitHub-Repo, es gibt keinen eigenen Server.
+
+1. Die Repository-Zip herunterladen:
+   https://raw.githubusercontent.com/gunnar69/kodi-tvframe/main/repo/zips/repository.tvframe43/repository.tvframe43-1.0.0.zip
+   Sie kommt z. B. per USB-Stick oder Netzwerkfreigabe aufs Gerät oder einfach in den Download-Ordner.
+2. In Kodi: *Einstellungen → Add-ons → Aus ZIP-Datei installieren* → `repository.tvframe43-1.0.0.zip` wählen. Eventuell muss vorher „Unbekannte Quellen“ erlaubt werden.
+3. *Add-ons → Aus Repository installieren → TV-Rahmen Repository → Dienst-Add-ons* (bzw. Programm-Add-ons) → **4:3-Röhrenfernseher** → Installieren.
+4. Updates: Unter *Einstellungen → System → Add-ons → Updates* „Updates automatisch installieren“ wählen, dann aktualisiert Kodi das Add-on selbst. Alternativ kann man unter *Add-ons → Updates prüfen* manuell nachsehen. Kodi prüft das Repository etwa einmal am Tag. Jedes Paket wird per sha256 geprüft.
+
+Ein bereits per Zip installiertes service.tvframe43 bleibt erhalten. Sobald das Repository installiert ist, erscheint die neuere Version als Update, und die Einstellungen bleiben erhalten.
+
+Ohne Repository geht es auch per Hand: die Zip unter `repo/zips/service.tvframe43/` laden und über *Aus ZIP-Datei installieren* einspielen. Dann gibt es allerdings keine automatischen Updates.
+
+Danach den Rahmen wählen: *Add-on-Einstellungen → Rahmen auswählen (mit Vorschau)* oder während der Wiedergabe über die optional belegbare Taste.
+
+### Neue Version veröffentlichen (für Maintainer)
+
+1. In `addon/service.tvframe43/addon.xml` die `version` erhöhen und einen `<news>`-Eintrag ergänzen.
+2. `python3 tools/build_repo.py` ausführen. Das erneuert `repo/addons.xml`, die Prüfsummen und die Zip. Ältere Zips werden aus `repo/` entfernt, sie bleiben aber in der Git-Historie.
+3. `python3 tools/build_repo.py --check` und `python3 tools/build_index.py --check` müssen „OK“ melden. Die CI prüft das bei jedem Pull Request ebenfalls.
+4. `repo/` zusammen mit dem Code committen und nach `main` pushen. raw.githubusercontent.com cacht etwa 5 Minuten.
+
+Wird geänderter Code ohne höhere Version gebaut, bricht `build_repo.py` ab, denn Kodi würde das Update sonst nie anbieten.
 
 ## Design-Galerie im Add-on
 

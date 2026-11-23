@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.tvframe43" name="TV-Rahmen Repository" version="1.0.0" provider-name="SARAH">
+  <extension point="xbmc.addon.repository">
+    <dir>
+      <info>https://raw.githubusercontent.com/gunnar69/kodi-tvframe/main/repo/addons.xml</info>
+      <checksum verify="sha256">https://raw.githubusercontent.com/gunnar69/kodi-tvframe/main/repo/addons.xml.sha256</checksum>
+      <datadir>https://raw.githubusercontent.com/gunnar69/kodi-tvframe/main/repo/zips/</datadir>
+      <hashes>sha256</hashes>
+    </dir>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de_DE">Updates für das Add-on „4:3-Röhrenfernseher“ (service.tvframe43)</summary>
+    <summary lang="en_GB">Updates for the "4:3 vintage TV frame" add-on (service.tvframe43)</summary>
+    <description lang="de_DE">Paketquelle für service.tvframe43 direkt aus github.com/gunnar69/kodi-tvframe. Nach der Installation findet Kodi neue Versionen selbst und installiert sie auf Wunsch automatisch. Alle Pakete werden per sha256 geprüft.</description>
+    <description lang="en_GB">Package source for service.tvframe43, served straight from github.com/gunnar69/kodi-tvframe. Once installed, Kodi finds new versions by itself and can install them automatically. All packages are verified with sha256.</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <source>https://github.com/gunnar69/kodi-tvframe</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>

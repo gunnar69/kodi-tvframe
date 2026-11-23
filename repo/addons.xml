@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+<addon id="repository.tvframe43" name="TV-Rahmen Repository" version="1.0.0" provider-name="SARAH">
+  <extension point="xbmc.addon.repository">
+    <dir>
+      <info>https://raw.githubusercontent.com/gunnar69/kodi-tvframe/main/repo/addons.xml</info>
+      <checksum verify="sha256">https://raw.githubusercontent.com/gunnar69/kodi-tvframe/main/repo/addons.xml.sha256</checksum>
+      <datadir>https://raw.githubusercontent.com/gunnar69/kodi-tvframe/main/repo/zips/</datadir>
+      <hashes>sha256</hashes>
+    </dir>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de_DE">Updates für das Add-on „4:3-Röhrenfernseher“ (service.tvframe43)</summary>
+    <summary lang="en_GB">Updates for the "4:3 vintage TV frame" add-on (service.tvframe43)</summary>
+    <description lang="de_DE">Paketquelle für service.tvframe43 direkt aus github.com/gunnar69/kodi-tvframe. Nach der Installation findet Kodi neue Versionen selbst und installiert sie auf Wunsch automatisch. Alle Pakete werden per sha256 geprüft.</description>
+    <description lang="en_GB">Package source for service.tvframe43, served straight from github.com/gunnar69/kodi-tvframe. Once installed, Kodi finds new versions by itself and can install them automatically. All packages are verified with sha256.</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <source>https://github.com/gunnar69/kodi-tvframe</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
+<addon id="service.tvframe43" name="4:3-Röhrenfernseher" version="1.3.3" provider-name="SARAH">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.service" library="service.py"/>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de_DE">Zeigt 4:3- und Breitbild-Videos in einem alten Fernsehgehäuse</summary>
+    <summary lang="en_GB">Shows 4:3 and widescreen videos inside a vintage TV cabinet</summary>
+    <description lang="de_DE">4:3-Videos (ca. 1,20–1,45) und Breitbild-Filme (ca. 2,10–2,50) laufen in einem bildschirmfüllenden Fernsehgehäuse. Stile: LG CX (virtueller OLED-Rahmen), 50er Holztruhe, Flach A/B sowie die älteren Stile aus 1.1.0, eine eigene PNG-Datei oder weitere Designs aus der Online-Galerie (github.com/gunnar69/kodi-tvframe, eigene Designs per Pull Request). Der Zoom wird aus der Mattscheibe berechnet. Breitbild-Filme mit eingebrannten schwarzen Balken im 16:9-Bild werden erkannt (Einzelbilder aus der Datei, Ergebnis je Datei gemerkt) und bekommen ebenfalls ihren Rahmen. Echtes 16:9 bleibt unangetastet.</description>
+    <description lang="en_GB">4:3 videos and cinemascope films play inside a full-screen vintage TV cabinet. Built-in styles, your own PNG or more designs from the online gallery (github.com/gunnar69/kodi-tvframe, contributions via pull request). Zoom is calculated from the screen area. Cinemascope films with burned-in black bars inside a 16:9 picture are detected (still frames from the file, result remembered per file). Real 16:9 is left alone.</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <source>https://github.com/gunnar69/kodi-tvframe</source>
+    <news>1.3.3: Repository-Unterstützung – Updates kommen jetzt über das TV-Rahmen Repository (repository.tvframe43), sonst unverändert. 1.3.2: Eingebrannte Balken – eigene Rahmenvariante mit mittiger Mattscheibe (LG CX, LG CX Gehäuse, je Breitbild und 2:1; Galerie-Designs optional). Das Bild bleibt unverschoben in der Mitte, Standfuß und Soundbar bleiben vollständig sichtbar. Stile ohne Variante wie 1.3.1. 1.3.1: Eingebrannte Balken – das Bild bleibt im Bildschirm, stattdessen rückt der Rahmen an die tatsächliche Bildlage (Kodi konnte das Bild auf der Box nicht über den oberen Rand schieben, der obere Balken blieb sichtbar). Kein ständiges Neusetzen der Ansicht mehr (Kodi meldet jede Ansichtsänderung zurück). 1.3.0: Eingebrannte schwarze Balken erkennen (Einstellung, Standard an) – 2,35/2,39- und 2:1-Filme im 16:9-Bild bekommen den passenden Rahmen. Messung über Einzelbilder aus der Datei (auch bei HDR/Dolby Vision), ersatzweise live; nur bei eindeutigem Ergebnis, einmal pro Datei, Rahmen erscheint nach der Messung. 1.2.0: Design-Galerie – weitere Rahmen aus github.com/gunnar69/kodi-tvframe laden, aktualisieren und entfernen (nur Bilddaten, mit Prüfsumme); installierte Designs je Format wählbar. 1.1.4: Stil getrennt je Format (4:3, 2,35:1, 2:1), „Ohne Rahmen“ als eigener Eintrag in der Auswahl statt Ein/Aus-Schalter; ohne Wiedergabe erst Format, dann Stil wählen. 1.1.3: Rahmen verschwindet zuverlässig, Info/Pause ohne Rahmen. 1.1.2: Rahmen-Auswahl mit Vorschaubildern, LG CX mit Gehäuse, 2:1-Rahmen.</news>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
+</addons>
